@@ -1,4 +1,3 @@
-
 export const containers = [
   {
     type: 'grid',
@@ -9,8 +8,8 @@ export const containers = [
       name: '',
       hidden: false,
       gutter: 12,
-      colHeight: null,  //栅格列统一高度属性，用于解决栅格列设置响应式布局浮动后被挂住的问题！！
-      customClass: '',  //自定义css类名
+      colHeight: null, //栅格列统一高度属性，用于解决栅格列设置响应式布局浮动后被挂住的问题！！
+      customClass: '' //自定义css类名
     }
   },
 
@@ -22,7 +21,7 @@ export const containers = [
     options: {
       name: '',
       hidden: false,
-      customClass: '',  //自定义css类名
+      customClass: '' //自定义css类名
     }
   },
 
@@ -35,7 +34,7 @@ export const containers = [
     options: {
       name: '',
       hidden: false,
-      customClass: '',  //自定义css类名
+      customClass: '' //自定义css类名
     }
   },
 
@@ -52,11 +51,11 @@ export const containers = [
       offset: 0,
       push: 0,
       pull: 0,
-      responsive: false,  //是否开启响应式布局
+      responsive: false, //是否开启响应式布局
       md: 12,
       sm: 12,
       xs: 12,
-      customClass: '',  //自定义css类名
+      customClass: '' //自定义css类名
     }
   },
 
@@ -73,7 +72,7 @@ export const containers = [
       cellHeight: '',
       colspan: 1,
       rowspan: 1,
-      customClass: '',  //自定义css类名
+      customClass: '' //自定义css类名
     }
   },
 
@@ -89,11 +88,9 @@ export const containers = [
       hidden: false,
       active: false,
       disabled: false,
-      customClass: '',  //自定义css类名
+      customClass: '' //自定义css类名
     }
-  },
-
-
+  }
 ]
 
 export const basicFields = [
@@ -122,7 +119,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -141,8 +138,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -168,7 +165,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -182,8 +179,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -207,7 +204,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -222,8 +219,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -245,16 +242,16 @@ export const basicFields = [
       disabled: false,
       hidden: false,
       optionItems: [
-        {label: 'radio 1', value: 1},
-        {label: 'radio 2', value: 2},
-        {label: 'radio 3', value: 3},
+        { label: 'radio 1', value: 1 },
+        { label: 'radio 2', value: 2 },
+        { label: 'radio 3', value: 3 }
       ],
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -262,8 +259,8 @@ export const basicFields = [
       onCreated: '',
       onMounted: '',
       onChange: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -285,16 +282,16 @@ export const basicFields = [
       disabled: false,
       hidden: false,
       optionItems: [
-        {label: 'check 1', value: 1},
-        {label: 'check 2', value: 2},
-        {label: 'check 3', value: 3},
+        { label: 'check 1', value: 1 },
+        { label: 'check 2', value: 2 },
+        { label: 'check 3', value: 3 }
       ],
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -302,8 +299,8 @@ export const basicFields = [
       onCreated: '',
       onMounted: '',
       onChange: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -326,20 +323,20 @@ export const basicFields = [
       filterable: false,
       allowCreate: false,
       remote: false,
-      automaticDropdown: false,  //自动下拉
+      automaticDropdown: false, //自动下拉
       multiple: false,
       multipleLimit: 0,
       optionItems: [
-        {label: 'select 1', value: 1},
-        {label: 'select 2', value: 2},
-        {label: 'select 3', value: 3},
+        { label: 'select 1', value: 1 },
+        { label: 'select 2', value: 2 },
+        { label: 'select 3', value: 3 }
       ],
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -350,8 +347,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -374,13 +371,13 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'HH:mm:ss',  //时间格式
+      format: 'HH:mm:ss', //时间格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -390,8 +387,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -415,13 +412,13 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'HH:mm:ss',  //时间格式
+      format: 'HH:mm:ss', //时间格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -431,8 +428,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -456,14 +453,14 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'YYYY-MM-DD',  //日期显示格式
-      valueFormat: 'YYYY-MM-DD',  //日期对象格式
+      format: 'YYYY-MM-DD', //日期显示格式
+      valueFormat: 'YYYY-MM-DD', //日期对象格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -473,8 +470,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -499,14 +496,14 @@ export const basicFields = [
       hidden: false,
       clearable: true,
       editable: false,
-      format: 'YYYY-MM-DD',  //日期显示格式
-      valueFormat: 'YYYY-MM-DD',  //日期对象格式
+      format: 'YYYY-MM-DD', //日期显示格式
+      valueFormat: 'YYYY-MM-DD', //日期对象格式
       required: false,
       requiredHint: '',
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -516,8 +513,8 @@ export const basicFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -535,7 +532,7 @@ export const basicFields = [
       disabled: false,
       hidden: false,
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -548,8 +545,8 @@ export const basicFields = [
       onCreated: '',
       onMounted: '',
       onChange: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -571,7 +568,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -585,8 +582,8 @@ export const basicFields = [
       onCreated: '',
       onMounted: '',
       onChange: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -609,7 +606,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -617,8 +614,8 @@ export const basicFields = [
       onCreated: '',
       onMounted: '',
       onChange: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -641,7 +638,7 @@ export const basicFields = [
       validation: '',
       validationHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -655,8 +652,8 @@ export const basicFields = [
       onCreated: '',
       onMounted: '',
       onChange: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -669,11 +666,11 @@ export const basicFields = [
       hidden: false,
       textContent: 'static text',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
-      onMounted: '',
-    },
+      onMounted: ''
+    }
   },
 
   {
@@ -686,13 +683,12 @@ export const basicFields = [
       hidden: false,
       htmlContent: '<b>html text</b>',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
-      onMounted: '',
-    },
+      onMounted: ''
+    }
   },
-
   {
     type: 'button',
     icon: 'button',
@@ -705,18 +701,19 @@ export const basicFields = [
       displayStyle: 'block',
       disabled: false,
       hidden: false,
+      color: '#409eff',
       type: '',
       plain: false,
       round: false,
       circle: false,
       icon: null,
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
       onMounted: '',
-      onClick: '',
-    },
+      onClick: ''
+    }
   },
 
   {
@@ -731,15 +728,12 @@ export const basicFields = [
       contentPosition: 'center',
       hidden: false,
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       //-------------------
       onCreated: '',
-      onMounted: '',
-    },
-  },
-
-  //
-
+      onMounted: ''
+    }
+  }
 ]
 
 export const advancedFields = [
@@ -769,7 +763,7 @@ export const advancedFields = [
       fileTypes: ['jpg', 'jpeg', 'png'],
       //headers: [],
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -780,10 +774,9 @@ export const advancedFields = [
       onUploadSuccess: '',
       onUploadError: '',
       onFileRemove: '',
-      onValidate: '',
+      onValidate: ''
       //onFileChange: '',
-    },
-
+    }
   },
 
   {
@@ -812,7 +805,7 @@ export const advancedFields = [
       fileTypes: ['doc', 'docx', 'xls', 'xlsx'],
       //headers: [],
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -823,9 +816,9 @@ export const advancedFields = [
       onUploadSuccess: '',
       onUploadError: '',
       onFileRemove: '',
-      onValidate: '',
+      onValidate: ''
       //onFileChange: '',
-    },
+    }
   },
 
   {
@@ -846,7 +839,7 @@ export const advancedFields = [
       customRule: '',
       customRuleHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -856,8 +849,8 @@ export const advancedFields = [
       //-------------------
       onCreated: '',
       onMounted: '',
-      onValidate: '',
-    },
+      onValidate: ''
+    }
   },
 
   {
@@ -877,16 +870,20 @@ export const advancedFields = [
       clearable: true,
       filterable: false,
       optionItems: [
-        {label: 'select 1', value: 1, children: [{label: 'child 1', value: 11}]},
-        {label: 'select 2', value: 2},
-        {label: 'select 3', value: 3},
+        {
+          label: 'select 1',
+          value: 1,
+          children: [{ label: 'child 1', value: 11 }]
+        },
+        { label: 'select 2', value: 2 },
+        { label: 'select 3', value: 3 }
       ],
       required: false,
       requiredHint: '',
       customRule: '',
       customRuleHint: '',
       //-------------------
-      customClass: '',  //自定义css类名
+      customClass: '', //自定义css类名
       labelIconClass: null,
       labelIconPosition: 'rear',
       labelTooltip: null,
@@ -896,15 +893,12 @@ export const advancedFields = [
       onChange: '',
       onFocus: '',
       onBlur: '',
-      onValidate: '',
-    },
-  },
-
+      onValidate: ''
+    }
+  }
 ]
 
-export const customFields = [
-
-]
+export const customFields = []
 
 export function addContainerWidgetSchema(containerSchema) {
   containers.push(containerSchema)

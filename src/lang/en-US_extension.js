@@ -3,6 +3,7 @@ export default {
     widgetLabel: {
       card: 'Card',
       alert: 'Alert',
+      tag: 'Tag'
     },
 
     setting: {
@@ -20,7 +21,8 @@ export default {
       showIcon: 'Show Icon',
       effect: 'Effect',
 
-    },
-
+      tagLabel: '标签文字',
+      tagType: '类型'
+    }
   }
 }

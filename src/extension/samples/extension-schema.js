@@ -11,7 +11,7 @@ export const cardSchema = {
     showFold: true,
     cardWidth: '100%',
     shadow: 'never',
-    customClass: '',
+    customClass: ''
   }
 }
 
@@ -31,6 +31,46 @@ export const alertSchema = {
     effect: 'light',
     hidden: false,
     onClose: '',
-    customClass: '',
+    customClass: ''
+  }
+}
+
+export const tagSchema = {
+  type: 'tag',
+  icon: 'tag',
+  formItemFlag: false,
+  options: {
+    type: 'success',
+    name: '',
+    label: '',
+    displayStyle: 'block',
+    columnWidth: '200px',
+    //-------------------
+    customClass: '', //自定义css类名
+    //事件-------------------
+    onCreated: '',
+    onMounted: '',
+    onClick: '',
+    onClose: ''
+  }
+}
+
+export const resultSchema = {
+  type: 'result',
+  icon: 'tag',
+  formItemFlag: false,
+  options: {
+    type: 'success',
+    name: '',
+    label: '',
+    displayStyle: 'block',
+    columnWidth: '200px',
+    //-------------------
+    customClass: '', //自定义css类名
+    //事件-------------------
+    onCreated: '',
+    onMounted: '',
+    onClick: '',
+    onClose: ''
   }
 }

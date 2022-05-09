@@ -3,7 +3,6 @@
     :designer="designer"
     :field="field"
     :design-state="designState"
-    :display-style="field.options.displayStyle"
     :parent-widget="parentWidget"
     :parent-list="parentList"
     :index-of-parent-list="indexOfParentList"
@@ -11,30 +10,32 @@
     :sub-form-col-index="subFormColIndex"
     :sub-form-row-id="subFormRowId"
   >
-    <el-button
-      ref="fieldEditor"
-      :type="field.options.type"
-      :size="widgetSize"
-      :plain="field.options.plain"
-      :round="field.options.round"
-      :circle="field.options.circle"
-      :icon="field.options.icon"
-      :disabled="field.options.disabled"
-      @click="handleButtonWidgetClick"
-    >
-      {{ field.options.label }}</el-button
-    >
+    <div>
+      <el-tag
+        ref="fieldEditor"
+        :title="field.options.title"
+        :type="field.options.type"
+        :description="field.options.description"
+        :closable="field.options.closable"
+        :center="field.options.center"
+        :close-text="field.options.closeText"
+        :show-icon="field.options.showIcon"
+        :effect="field.options.effect"
+        @close="handelCloseCustomEvent"
+        >{{ field.options.label }}</el-tag
+      >
+    </div>
   </static-content-wrapper>
 </template>
 
 <script>
-import StaticContentWrapper from './static-content-wrapper'
+import StaticContentWrapper from '@/components/form-designer/form-widget/field-widget/static-content-wrapper'
 import emitter from '@/utils/emitter'
-import i18n, { translate } from '@/utils/i18n'
+import i18n from '@/utils/i18n'
 import fieldMixin from '@/components/form-designer/form-widget/field-widget/fieldMixin'
 
 export default {
-  name: 'button-widget',
+  name: 'tag-widget',
   componentName: 'FieldWidget', //必须固定为FieldWidget，用于接收父级组件的broadcast事件
   mixins: [emitter, fieldMixin, i18n],
   props: {
@@ -65,32 +66,22 @@ export default {
   components: {
     StaticContentWrapper
   },
-  computed: {},
-  beforeCreate() {
-    /* 这里不能访问方法和属性！！ */
-  },
-
   created() {
-    /* 注意：子组件mounted在父组件created之后、父组件mounted之前触发，故子组件mounted需要用到的prop
-         需要在父组件created中初始化！！ */
     this.registerToRefList()
     this.initEventHandler()
-
-    this.handleOnCreated()
   },
-
-  mounted() {
-    this.handleOnMounted()
-  },
-
   beforeUnmount() {
     this.unregisterFromRefList()
   },
-
-  methods: {}
+  methods: {
+    handelCloseCustomEvent() {
+      if (!!this.field.options.onClose) {
+        let changeFn = new Function(this.field.options.onClose)
+        changeFn.call(this)
+      }
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-@import '../../../../styles/global.scss'; //* static-content-wrapper已引入，还需要重复引入吗？ *//
-</style>
+<style lang="scss" scoped></style>

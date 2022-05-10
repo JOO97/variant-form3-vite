@@ -7,7 +7,7 @@ export default {
     document: '文档',
     qqGroup: '技术WX群',
     deployment: '私有部署',
-    subscription: '订阅Pro',
+    subscription: '订阅Pro'
   },
 
   designer: {
@@ -23,42 +23,42 @@ export default {
     noWidgetHint: '请从左侧列表中选择一个组件, 然后用鼠标拖动组件放置于此处.',
 
     widgetLabel: {
-      grid:             '栅格',
-      table:            '表格',
-      tab:              '标签页',
-      section:          '区块',
-      'sub-form':       '子表单',
-      'grid-col':       '栅格列',
-      'table-cell':     '单元格',
-      'tab-pane':       '选项卡页',
-      'data-table':     '数据表格',
+      grid: '栅格',
+      table: '表格',
+      tab: '标签页',
+      section: '区块',
+      'sub-form': '子表单',
+      'grid-col': '栅格列',
+      'table-cell': '单元格',
+      'tab-pane': '选项卡页',
+      'data-table': '数据表格',
 
-      input:          '单行输入',
-      textarea:       '多行输入',
-      number:         '计数器',
-      radio:          '单选项',
-      checkbox:       '多选项',
-      select:         '下拉选项',
-      time:           '时间',
-      'time-range':   '时间范围',
-      date:           '日期',
-      'date-range':   '日期范围',
-      switch:         '开关',
-      rate:           '评分',
-      color:          '颜色选择器',
-      slider:         '滑块',
-      'static-text':  '静态文字',
-      'html-text':    'HTML',
-      button:         '按钮',
-      divider:        '分隔线',
+      input: '单行输入',
+      textarea: '多行输入',
+      number: '计数器',
+      radio: '单选项',
+      checkbox: '多选项',
+      select: '下拉选项',
+      time: '时间',
+      'time-range': '时间范围',
+      date: '日期',
+      'date-range': '日期范围',
+      switch: '开关',
+      rate: '评分',
+      color: '颜色选择器',
+      slider: '滑块',
+      'static-text': '静态文字',
+      'html-text': 'HTML',
+      button: '按钮',
+      divider: '分隔线',
 
       'picture-upload': '图片',
-      'file-upload':    '文件',
-      'rich-editor':    '富文本',
-      cascader:         '级联选择',
-      slot:             '插槽',
+      'file-upload': '文件',
+      'rich-editor': '富文本',
+      cascader: '级联选择',
+      slot: '插槽',
 
-      custom:           'Custom Component',
+      custom: 'Custom Component'
     },
 
     hint: {
@@ -111,7 +111,8 @@ export default {
       sampleLoadedSuccess: '表单示例加载成功',
       sampleLoadedFail: '表单示例加载失败',
       loadFormTemplate: '加载此模板',
-      loadFormTemplateHint: '是否加载这个模板？加载后会覆盖设计器当前表单，你可以使用“撤销”功能恢复。',
+      loadFormTemplateHint:
+        '是否加载这个模板？加载后会覆盖设计器当前表单，你可以使用“撤销”功能恢复。',
       loadFormTemplateSuccess: '表单模板加载成功',
       loadFormTemplateFailed: '表单模板加载失败',
       currentNodeCannotBeSelected: '当前组件节点不可选择',
@@ -138,12 +139,16 @@ export default {
       noChineseValidator: '非中文字符',
       chineseValidator: '仅中文字符',
 
-      rowspanNotConsistentForMergeEntireRow: '存在行高不一致的单元格, 无法合并整行.',
-      colspanNotConsistentForMergeEntireColumn: '存在列宽不一致的单元格, 无法合并整列.',
-      rowspanNotConsistentForDeleteEntireRow: '存在行高不一致的单元格, 不可删除整行.',
-      colspanNotConsistentForDeleteEntireColumn: '存在列宽不一致的单元格, 不可删除整列.',
+      rowspanNotConsistentForMergeEntireRow:
+        '存在行高不一致的单元格, 无法合并整行.',
+      colspanNotConsistentForMergeEntireColumn:
+        '存在列宽不一致的单元格, 无法合并整列.',
+      rowspanNotConsistentForDeleteEntireRow:
+        '存在行高不一致的单元格, 不可删除整行.',
+      colspanNotConsistentForDeleteEntireColumn:
+        '存在列宽不一致的单元格, 不可删除整列.',
       lastColCannotBeDeleted: '最后一列不可删除.',
-      lastRowCannotBeDeleted: '最后一行不可删除.',
+      lastRowCannotBeDeleted: '最后一行不可删除.'
     },
 
     toolbar: {
@@ -160,7 +165,7 @@ export default {
       exportJson: '导出JSON',
       exportCode: '导出代码',
       generateCode: '生成代码',
-      generateSFC: '生成SFC',
+      generateSFC: '生成SFC'
     },
 
     setting: {
@@ -321,7 +326,8 @@ export default {
       formRulesName: '验证规则名称',
       syntaxCheckWarning: 'JS代码存在语法错误，请仔细检查！',
 
+      //custom
+      color: '颜色'
     }
-
   }
 }

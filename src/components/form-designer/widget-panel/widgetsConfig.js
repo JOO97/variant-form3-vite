@@ -1,3 +1,7 @@
+/**
+ * 内置组件config定义
+ */
+
 export const containers = [
   {
     type: 'grid',
@@ -712,7 +716,9 @@ export const basicFields = [
       //-------------------
       onCreated: '',
       onMounted: '',
-      onClick: ''
+      onClick: '',
+      //custom
+      color: ''
     }
   },
 

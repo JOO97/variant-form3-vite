@@ -22,7 +22,8 @@ export default {
       effect: 'Effect',
 
       tagLabel: '标签文字',
-      tagType: '类型'
+      tagType: '类型',
+      tagColor: '颜色'
     }
   }
 }

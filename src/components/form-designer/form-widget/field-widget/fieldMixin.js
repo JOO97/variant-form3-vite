@@ -255,7 +255,9 @@ export default {
 
       this.rules.splice(0, this.rules.length) //清空已有
     },
-
+    /**
+     * 生成表单校验规则
+     */
     buildFieldRules() {
       if (!this.field.formItemFlag) {
         return
@@ -465,7 +467,9 @@ export default {
         changeFn.call(this, val, oldVal, subFormData, rowId)
       }
     },
-
+    /**
+     * 调用button组件中定义的onClick方法
+     */
     handleButtonWidgetClick() {
       if (!!this.designState) {
         //设计状态不触发点击事件

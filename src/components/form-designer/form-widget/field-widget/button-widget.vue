@@ -21,6 +21,7 @@
       :icon="field.options.icon"
       :disabled="field.options.disabled"
       @click="handleButtonWidgetClick"
+      :style="{ backgroundColor: field.options.color }"
     >
       {{ field.options.label }}</el-button
     >

@@ -183,19 +183,29 @@ export const loadExtension = function (app) {
    */
   addCustomWidgetSchema(tagSchema) //加载组件Json Schema
   app.component(TagWidget.name, TagWidget) //注册组件
+
+  //自定义属性
   PERegister.registerCPEditor(
     app,
-    'tag-label',
+    'tag-color', //属性名称
+    'tag-color-editor', //属性组件名称
+    PEFactory.createColorEditor('color', 'extension.setting.tagColor') //组件
+  )
+
+  //tag label 默认属性中包含该字段的话，直接注册组件
+  app.component(
     'tag-label-editor',
     PEFactory.createInputTextEditor('label', 'extension.setting.tagLabel')
   )
 
+  //tag type
   app.component(
     'tag-type-editor',
     PEFactory.createSelectEditor('type', 'extension.setting.tagType', {
       optionItems: typeOptions
     })
   )
+
   registerFWGenerator('tag', tagTemplateGenerator) //注册字段组件的代码生成器
 
   addCustomWidgetSchema(resultSchema) //加载组件Json Schema

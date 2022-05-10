@@ -33,7 +33,6 @@ import StaticContentWrapper from '@/components/form-designer/form-widget/field-w
 import emitter from '@/utils/emitter'
 import i18n from '@/utils/i18n'
 import fieldMixin from '@/components/form-designer/form-widget/field-widget/fieldMixin'
-
 export default {
   name: 'tag-widget',
   componentName: 'FieldWidget', //必须固定为FieldWidget，用于接收父级组件的broadcast事件

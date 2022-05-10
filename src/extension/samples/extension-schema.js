@@ -45,6 +45,8 @@ export const tagSchema = {
     label: '',
     displayStyle: 'block',
     columnWidth: '200px',
+    color: '#409eff',
+
     //-------------------
     customClass: '', //自定义css类名
     //事件-------------------
@@ -65,6 +67,7 @@ export const resultSchema = {
     label: '',
     displayStyle: 'block',
     columnWidth: '200px',
+
     //-------------------
     customClass: '', //自定义css类名
     //事件-------------------

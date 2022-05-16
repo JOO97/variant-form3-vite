@@ -3,6 +3,8 @@
  */
 import { translate } from '@/utils/i18n'
 import emitter from '@/utils/emitter'
+import { optionExists } from '@/utils/util'
+import columnsEditor from '@/components/form-designer/setting-panel/property-editor/table/columns-editor.vue'
 
 export const createInputTextEditor = function (propName, propLabelKey) {
   return {
@@ -91,6 +93,8 @@ export const createRadioGroupEditor = function (
   propLabelKey,
   configs
 ) {
+  console.log(1)
+
   return {
     props: {
       optionModel: Object
@@ -209,6 +213,23 @@ export const createColorEditor = function (propName, propLabelKey) {
             v-model={this.optionModel[propName]}
             size="large"
           />
+        </el-form-item>
+      )
+    }
+  }
+}
+
+//table columns
+export const createColumnsEditor = function (propName, propLabelKey) {
+  console.log('columnsEditor', columnsEditor)
+  return {
+    props: {
+      optionModel: Object
+    },
+    render() {
+      return (
+        <el-form-item label={translate(propLabelKey)}>
+          <columnsEditor data="{JSON.parse(optionModel.columns)}" />
         </el-form-item>
       )
     }

@@ -17,17 +17,17 @@ export const containers = [
     }
   },
 
-  {
-    type: 'table',
-    category: 'container',
-    icon: 'table',
-    rows: [],
-    options: {
-      name: '',
-      hidden: false,
-      customClass: '' //自定义css类名
-    }
-  },
+  // {
+  //   type: 'table',
+  //   category: 'container',
+  //   icon: 'table',
+  //   rows: [],
+  //   options: {
+  //     name: '',
+  //     hidden: false,
+  //     customClass: '' //自定义css类名
+  //   }
+  // },
 
   {
     type: 'tab',
@@ -63,22 +63,22 @@ export const containers = [
     }
   },
 
-  {
-    type: 'table-cell',
-    category: 'container',
-    icon: 'table-cell',
-    internal: true,
-    widgetList: [],
-    merged: false,
-    options: {
-      name: '',
-      cellWidth: '',
-      cellHeight: '',
-      colspan: 1,
-      rowspan: 1,
-      customClass: '' //自定义css类名
-    }
-  },
+  // {
+  //   type: 'table-cell',
+  //   category: 'container',
+  //   icon: 'table-cell',
+  //   internal: true,
+  //   widgetList: [],
+  //   merged: false,
+  //   options: {
+  //     name: '',
+  //     cellWidth: '',
+  //     cellHeight: '',
+  //     colspan: 1,
+  //     rowspan: 1,
+  //     customClass: '' //自定义css类名
+  //   }
+  // },
 
   {
     type: 'tab-pane',

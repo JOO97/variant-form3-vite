@@ -25,6 +25,7 @@ export default {
     widgetLabel: {
       grid: '栅格',
       table: '表格',
+      result: '结果',
       tab: '标签页',
       section: '区块',
       'sub-form': '子表单',

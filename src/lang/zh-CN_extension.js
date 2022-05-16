@@ -23,7 +23,21 @@ export default {
 
       tagLabel: '标签文字',
       tagType: '标签类型',
-      tagColor: '颜色'
+      tagColor: '颜色',
+
+      tableData: '表格数据',
+      tableColumns: '表格列',
+      height: '高度(px/%)',
+      maxHeight: '最大高度(px/%)',
+      stripe: '斑马纹',
+      border: '边框',
+      size: '尺寸',
+      fit: '列的宽度自撑开',
+      showHeader: '显示头部',
+      highlightCurrentRow: '高亮当前行',
+      emptyText: '空数据提示文字',
+      layout: '布局方式',
+      scrollbarAlwaysOn: '总是显示滚动条'
     }
   }
 }

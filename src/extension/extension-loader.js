@@ -7,23 +7,31 @@ import {
 import * as PERegister from '@/components/form-designer/setting-panel/propertyRegister'
 import * as PEFactory from '@/components/form-designer/setting-panel/property-editor-factory.jsx'
 
-import { cardSchema } from '@/extension/samples/extension-schema'
+import {
+  cardSchema,
+  alertSchema,
+  tagSchema,
+  resultSchema,
+  tableSchema
+} from '@/extension/samples/extension-schema'
+
+import { registerFWGenerator } from '@/utils/sfc-generator'
+
+import {
+  cardTemplateGenerator,
+  alertTemplateGenerator,
+  tagTemplateGenerator
+} from '@/extension/samples/extension-sfc-generator'
+
+import { registerCWGenerator } from '@/utils/sfc-generator'
+
 import CardWidget from '@/extension/samples/card/card-widget'
 import CardItem from '@/extension/samples/card/card-item'
-import { registerCWGenerator } from '@/utils/sfc-generator'
-import { cardTemplateGenerator } from '@/extension/samples/extension-sfc-generator'
 
-import { alertSchema } from '@/extension/samples/extension-schema'
 import AlertWidget from '@/extension/samples/alert/alert-widget'
-import { registerFWGenerator } from '@/utils/sfc-generator'
-import { alertTemplateGenerator } from '@/extension/samples/extension-sfc-generator'
-
-import { tagSchema } from '@/extension/samples/extension-schema'
 import TagWidget from '@/extension/samples/tag/tag-widget'
-import { tagTemplateGenerator } from '@/extension/samples/extension-sfc-generator'
-
-import { resultSchema } from '@/extension/samples/extension-schema'
 import ResultWidget from '@/extension/samples/result/result-widget'
+import TableWidget from '@/extension/samples/table/table-widget'
 
 export const loadExtension = function (app) {
   /**
@@ -210,4 +218,112 @@ export const loadExtension = function (app) {
 
   addCustomWidgetSchema(resultSchema) //加载组件Json Schema
   app.component(ResultWidget.name, ResultWidget) //注册组件
+
+  /**
+   * custom table component
+   */
+  addCustomWidgetSchema(tableSchema) //加载组件Json Schema
+  app.component(TableWidget.name, TableWidget) //注册组件
+
+  //table自定义属性
+  PERegister.registerCPEditor(
+    app,
+    'table-data', //属性名称
+    'table-data-editor', //属性组件名称
+    PEFactory.createInputTextEditor('data', 'extension.setting.tableData') //组件
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'table-columns',
+    'table-columns-editor',
+    PEFactory.createColumnsEditor('columns', 'extension.setting.tableColumns')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'height',
+    'height-editor',
+    PEFactory.createInputTextEditor('height', 'extension.setting.height')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'max-height',
+    'max-height-editor',
+    PEFactory.createInputTextEditor('max-height', 'extension.setting.maxHeight')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'stripe',
+    'stripe-editor',
+    PEFactory.createBooleanEditor('stripe', 'extension.setting.stripe')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'border',
+    'border-editor',
+    PEFactory.createBooleanEditor('border', 'extension.setting.border')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'fit',
+    'fit-editor',
+    PEFactory.createBooleanEditor('fit', 'extension.setting.fit')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'show-header',
+    'show-header-editor',
+    PEFactory.createBooleanEditor('show-header', 'extension.setting.showHeader')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'highlight-current-row',
+    'highlight-current-row-editor',
+    PEFactory.createBooleanEditor(
+      'highlight-current-row',
+      'extension.setting.highlightCurrentRow'
+    )
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'empty-text',
+    'empty-text-editor',
+    PEFactory.createInputTextEditor('empty-text', 'extension.setting.emptyText')
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'layout',
+    'table-layout-editor',
+    PEFactory.createRadioGroupEditor('layout', 'extension.setting.layout', {
+      optionItems: [
+        {
+          label: 'AUTO',
+          value: 'auto'
+        },
+        {
+          label: 'FIXED',
+          value: 'fixed'
+        }
+      ]
+    })
+  )
+
+  PERegister.registerCPEditor(
+    app,
+    'scrollbar-always-on',
+    'scrollbar-always-on-editor',
+    PEFactory.createBooleanEditor(
+      'scrollbar-always-on',
+      'extension.setting.scrollbarAlwaysOn'
+    )
+  )
 }

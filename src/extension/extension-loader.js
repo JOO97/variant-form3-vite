@@ -242,6 +242,13 @@ export const loadExtension = function (app) {
 
   PERegister.registerCPEditor(
     app,
+    'data-source', //属性名称
+    'data-source-editor', //属性组件名称
+    PEFactory.createDataSourceEditor('extension.setting.dataSource') //组件
+  )
+
+  PERegister.registerCPEditor(
+    app,
     'height',
     'height-editor',
     PEFactory.createInputTextEditor('height', 'extension.setting.height')

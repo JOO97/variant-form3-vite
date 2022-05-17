@@ -109,13 +109,25 @@ export const tableSchema = {
     columns: `[
       {
         "prop": "date",
-        "label": "日期"
+        "label": "日期",
+        "width":"",
+        "sortable":false,
+        "fixed":false,
+        "align":"left"
       }, {
         "prop": "name",
-        "label": "名字"
+        "label": "名字",
+         "width":"",
+        "sortable":false,
+        "fixed":false,
+        "align":"left"
       }, {
         "prop": "address",
-        "label": "地址"
+        "label": "地址",
+         "width":"",
+        "sortable":false,
+        "fixed":false,
+        "align":"left"
       }
     ]`,
     data: `[{
@@ -129,6 +141,19 @@ export const tableSchema = {
       "address": "xm"
     }
   ]`,
+    'data-source': {
+      type: 'api',
+      name: 'table数据api',
+      request: {
+        url: 'https://www.fastmock.site/mock/e9710039bb5f11262d1a0f2f0bbe08c8/vform3/getFS',
+        method: 'GET',
+        headers: {},
+        params: {},
+        data: {}
+      },
+      beforeRequest: `function () {}`,
+      afterRequest: `function () {}`
+    },
     //-------------------
     customClass: '', //自定义css类名
     //事件-------------------

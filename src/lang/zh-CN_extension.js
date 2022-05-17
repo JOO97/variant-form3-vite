@@ -37,7 +37,8 @@ export default {
       highlightCurrentRow: '高亮当前行',
       emptyText: '空数据提示文字',
       layout: '布局方式',
-      scrollbarAlwaysOn: '总是显示滚动条'
+      scrollbarAlwaysOn: '总是显示滚动条',
+      dataSource: '数据源'
     }
   }
 }

@@ -5,6 +5,7 @@ import { translate } from '@/utils/i18n'
 import emitter from '@/utils/emitter'
 import { optionExists } from '@/utils/util'
 import columnsEditor from '@/components/form-designer/setting-panel/property-editor/table/columns-editor.vue'
+import dataSourceEditor from '@/components/form-designer/setting-panel/property-editor/table/data-source-editor.vue'
 
 export const createInputTextEditor = function (propName, propLabelKey) {
   return {
@@ -219,9 +220,8 @@ export const createColorEditor = function (propName, propLabelKey) {
   }
 }
 
-//table columns
+//表格列编辑器
 export const createColumnsEditor = function (propName, propLabelKey) {
-  console.log('columnsEditor', columnsEditor)
   return {
     props: {
       optionModel: Object
@@ -229,7 +229,34 @@ export const createColumnsEditor = function (propName, propLabelKey) {
     render() {
       return (
         <el-form-item label={translate(propLabelKey)}>
-          <columnsEditor data="{JSON.parse(optionModel.columns)}" />
+          <columnsEditor
+            data={JSON.parse(this.optionModel.columns)}
+            onSubmit={(columns) => {
+              this.optionModel.columns = JSON.stringify(columns)
+            }}
+          />
+        </el-form-item>
+      )
+    }
+  }
+}
+
+//表格列编辑器
+export const createDataSourceEditor = function (propLabelKey) {
+  return {
+    props: {
+      optionModel: Object
+    },
+    render() {
+      console.log('designer', this.designer)
+      return (
+        <el-form-item label={translate(propLabelKey)}>
+          <dataSourceEditor
+            data={this.optionModel['data-source']}
+            // onSubmit={(columns) => {
+            //   this.optionModel.columns = JSON.stringify(columns)
+            // }}
+          />
         </el-form-item>
       )
     }

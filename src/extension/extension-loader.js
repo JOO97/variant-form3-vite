@@ -242,6 +242,15 @@ export const loadExtension = function (app) {
 
   PERegister.registerCPEditor(
     app,
+    'use-data-source',
+    'use-data-source-editor',
+    PEFactory.createBooleanEditor(
+      'use-data-source',
+      'extension.setting.useDataSource'
+    )
+  )
+  PERegister.registerCPEditor(
+    app,
     'data-source', //属性名称
     'data-source-editor', //属性组件名称
     PEFactory.createDataSourceEditor('extension.setting.dataSource') //组件
@@ -322,6 +331,27 @@ export const loadExtension = function (app) {
         }
       ]
     })
+  )
+  //operation
+  PERegister.registerCPEditor(
+    app,
+    'show-operation',
+    'show-operation-editor',
+    PEFactory.createBooleanEditor(
+      'show-operation',
+      'extension.setting.showOperation'
+    )
+  )
+
+  //分页
+  PERegister.registerCPEditor(
+    app,
+    'usePagination',
+    'use-pagination-editor',
+    PEFactory.createBooleanEditor(
+      'usePagination',
+      'extension.setting.usePagination'
+    )
   )
 
   PERegister.registerCPEditor(

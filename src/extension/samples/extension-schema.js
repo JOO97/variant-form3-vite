@@ -83,11 +83,16 @@ export const tableSchema = {
   icon: 'table',
   formItemFlag: false,
   options: {
-    //table属性 1
+    name: '',
+    label: '',
+    // displayStyle: 'block',
+    // columnWidth: '200px',
+    customClass: '', //自定义css类名
+    //-------------------------
     height: '',
     'max-height': '',
-    stripe: false,
-    border: false,
+    stripe: true,
+    border: true,
     size: 'default',
     fit: true,
     'show-header': true,
@@ -95,15 +100,41 @@ export const tableSchema = {
     'empty-text': 'No Data',
     layout: 'auto', //布局
     'scrollbar-always-on': false,
-    //table 属性 2---------------
-    'show-summary': false,
-    test: 'auto',
-    //---------------------
-    // type: 'success',
-    name: '',
-    label: '',
-    // displayStyle: 'block',
-    // columnWidth: '200px',
+    'show-operation': true, //是否显示操作栏
+    operations: {
+      label: '操作',
+      width: '200',
+      list: [
+        {
+          name: '查看',
+          value: 'detail',
+          type: 'text',
+          size: 'small',
+          circle: false,
+          disable: '',
+          visible: true
+        },
+        {
+          name: '编辑',
+          value: 'edit',
+          type: 'text',
+          size: 'small',
+          circle: false,
+          visible: true,
+          disable: ''
+        },
+        {
+          name: '编辑',
+          value: 'edit',
+          type: 'text',
+          size: 'small',
+          circle: false,
+          visible: true,
+          disable: ''
+        }
+      ]
+    },
+    usePagination: false, //分页
 
     //数据------------------
     columns: `[
@@ -113,11 +144,11 @@ export const tableSchema = {
         "width":"",
         "sortable":false,
         "fixed":false,
-        "align":"left"
+        "align":"center"
       }, {
         "prop": "name",
         "label": "名字",
-         "width":"",
+        "width":"",
         "sortable":false,
         "fixed":false,
         "align":"left"
@@ -141,25 +172,25 @@ export const tableSchema = {
       "address": "xm"
     }
   ]`,
+    'use-data-source': true, //使用数据源
     'data-source': {
       type: 'api',
       name: 'table数据api',
       request: {
-        url: 'https://www.fastmock.site/mock/e9710039bb5f11262d1a0f2f0bbe08c8/vform3/getFS',
+        url: 'https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/tableData',
         method: 'GET',
-        headers: {},
-        params: {},
-        data: {}
+        headers: '{}',
+        params: '{}',
+        data: '{}'
       },
-      beforeRequest: `function () {}`,
-      afterRequest: `function () {}`
+      beforeRequest: `return req`,
+      afterRequest: `return res`
     },
-    //-------------------
-    customClass: '', //自定义css类名
-    //事件-------------------
+    //TODO:事件-------------------
     onCreated: '',
     onMounted: '',
-    onClick: '',
-    onClose: ''
+    onPageSizeChange: '',
+    onCurrentPageChange: '',
+    onOperationButtonClick: ''
   }
 }

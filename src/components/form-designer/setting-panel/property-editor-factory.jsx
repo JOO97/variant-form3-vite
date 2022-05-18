@@ -248,11 +248,11 @@ export const createDataSourceEditor = function (propLabelKey) {
       optionModel: Object
     },
     render() {
-      console.log('designer', this.designer)
       return (
         <el-form-item label={translate(propLabelKey)}>
           <dataSourceEditor
             data={this.optionModel['data-source']}
+            disabled={this.optionModel['use-data-source']}
             // onSubmit={(columns) => {
             //   this.optionModel.columns = JSON.stringify(columns)
             // }}

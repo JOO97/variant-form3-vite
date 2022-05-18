@@ -38,7 +38,11 @@ export default {
       emptyText: '空数据提示文字',
       layout: '布局方式',
       scrollbarAlwaysOn: '总是显示滚动条',
-      dataSource: '数据源'
+      dataSource: '数据源',
+      showOperation: '显示操作按钮列',
+      operations: '操作按钮编辑',
+      useDataSource: '使用数据源',
+      usePagination: '使用分页'
     }
   }
 }

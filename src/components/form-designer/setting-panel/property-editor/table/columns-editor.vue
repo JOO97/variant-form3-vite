@@ -7,13 +7,73 @@
       @click="dialogVisible = true"
     />
     <el-dialog v-model="dialogVisible" title="表格列编辑" draggable>
-      <draggable
+      <el-table v-bind="componentData">
+        <template
+          v-for="(option, index) in tableColumns"
+          :key="index + '_tableColumns'"
+        >
+          <el-table-column
+            v-bind="option"
+            v-if="!['operation', 'draggable'].includes(option.prop)"
+          >
+            <template
+              v-if="option.type && option.type !== 'index'"
+              #default="{ $index }"
+            >
+              <component
+                :is="option.type"
+                v-model="tableData[$index][option.prop]"
+                @change="handleFormItemChange"
+              >
+                <template v-if="option.child">
+                  <component
+                    :is="option.child.type"
+                    v-for="child in option.child.options"
+                    :key="child.value + index"
+                    :label="child.label"
+                    :value="child.value"
+                  />
+                </template>
+              </component>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-else-if="option.prop === 'draggable'"
+            v-bind="option"
+            width="50px"
+          >
+            <template>
+              <i class="iconfont icon-drag drag-option drag-handle" />
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" v-else width="100">
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="primary"
+                :icon="Plus"
+                circle
+                @click="handleAddRow(scope.$index, scope.row)"
+              />
+              <el-button
+                size="small"
+                type="danger"
+                :icon="Minus"
+                circle
+                @click="handleRemoveRow(scope.$index, scope.row)"
+              />
+            </template>
+          </el-table-column>
+        </template>
+      </el-table>
+      <!-- <draggable
         tag="el-table"
         :list="tableColumns"
-        ghost-class="ghost"
         @start="dragging = true"
         @end="dragging = false"
         :component-data="componentData"
+        item-key="prop"
+        v-bind="{ group: 'dragGroup', ghostClass: 'ghost', animation: 300 }"
       >
         <template #item="{ element: option, index: idx }">
           <el-table-column
@@ -69,7 +129,7 @@
             </template>
           </el-table-column>
         </template>
-      </draggable>
+      </draggable> -->
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -81,7 +141,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, computed, reactive, toRaw } from 'vue'
+import { ref, computed, reactive, toRaw } from 'vue'
 import { Edit, Plus, Minus } from '@element-plus/icons-vue'
 
 const props = defineProps({
@@ -98,7 +158,8 @@ const tableData = reactive(props.data.map((item) => item))
 //列
 const tableColumns = reactive([
   {
-    type: 'index'
+    type: 'index',
+    prop: 'index'
   },
   {
     prop: 'draggable'
@@ -172,10 +233,6 @@ const dialogVisible = ref(false)
 //drag
 const dragging = ref(false)
 const dragEnabled = ref(true)
-
-const handleFormItemChange = (value) => {
-  console.log('handleFormItemChange', value)
-}
 
 //增加、移除行
 const handleAddRow = (index, row) => {

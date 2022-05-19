@@ -230,7 +230,7 @@ export const loadExtension = function (app) {
     app,
     'table-data', //属性名称
     'table-data-editor', //属性组件名称
-    PEFactory.createInputTextEditor('data', 'extension.setting.tableData') //组件
+    PEFactory.createDataEditor('data', 'extension.setting.tableData') //组件
   )
 
   PERegister.registerCPEditor(
@@ -362,5 +362,48 @@ export const loadExtension = function (app) {
       'scrollbar-always-on',
       'extension.setting.scrollbarAlwaysOn'
     )
+  )
+  /**
+   * table组件相关事件注册
+   */
+  // PERegister.registerEPEditor(
+  //   app,
+  //   'table-onCreated',
+  //   'table-onCreated-editor',
+  //   PEFactory.createEventHandlerEditor('onCreated', [])
+  // )
+  // PERegister.registerEPEditor(
+  //   app,
+  //   'table-onMounted',
+  //   'table-onMounted-editor',
+  //   PEFactory.createEventHandlerEditor('onMounted', [])
+  // )
+  PERegister.registerEPEditor(
+    app,
+    'table-onOperationButtonClick',
+    'table-onOperationButtonClick-editor',
+    PEFactory.createEventHandlerEditor('onOperationButtonClick', [
+      'buttonName',
+      'rowIndex',
+      'row'
+    ])
+  )
+  PERegister.registerEPEditor(
+    app,
+    'table-onPageSizeChange',
+    'table-onPageSizeChange-editor',
+    PEFactory.createEventHandlerEditor('onPageSizeChange', [
+      'pageSize',
+      'currentPage'
+    ])
+  )
+  PERegister.registerEPEditor(
+    app,
+    'table-onCurrentPageChange',
+    'table-onCurrentPageChange-editor',
+    PEFactory.createEventHandlerEditor('onCurrentPageChange', [
+      'pageSize',
+      'currentPage'
+    ])
   )
 }

@@ -176,6 +176,7 @@ export default {
     },
 
     handleOnMounted() {
+      console.log('handleOnMounted', this.field.options)
       if (!!this.field.options.onMounted) {
         let mountFunc = new Function(this.field.options.onMounted)
         mountFunc.call(this)

@@ -106,8 +106,8 @@ export const tableSchema = {
       width: '200',
       list: [
         {
-          name: '查看',
-          value: 'detail',
+          label: '查看',
+          name: 'detail',
           type: 'text',
           size: 'small',
           circle: false,
@@ -115,8 +115,8 @@ export const tableSchema = {
           visible: true
         },
         {
-          name: '编辑',
-          value: 'edit',
+          label: '编辑',
+          name: 'edit',
           type: 'text',
           size: 'small',
           circle: false,
@@ -124,8 +124,8 @@ export const tableSchema = {
           disable: ''
         },
         {
-          name: '编辑',
-          value: 'edit',
+          label: '删除',
+          name: 'delete',
           type: 'text',
           size: 'small',
           circle: false,
@@ -138,13 +138,21 @@ export const tableSchema = {
 
     //数据------------------
     columns: `[
+       {
+        "prop": "id",
+        "label": "ID",
+        "width":"",
+        "sortable":true,
+        "fixed":false,
+        "align":"left"
+      },
       {
         "prop": "date",
         "label": "日期",
         "width":"",
         "sortable":false,
         "fixed":false,
-        "align":"center"
+        "align":"left"
       }, {
         "prop": "name",
         "label": "名字",
@@ -183,10 +191,10 @@ export const tableSchema = {
         params: '{}',
         data: '{}'
       },
-      beforeRequest: `return req`,
-      afterRequest: `return res`
+      onBeforeRequest: 'return config',
+      onAfterResponse: 'return response.data'
     },
-    //TODO:事件-------------------
+    //事件-------------------
     onCreated: '',
     onMounted: '',
     onPageSizeChange: '',

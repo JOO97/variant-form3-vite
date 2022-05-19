@@ -4,6 +4,8 @@
 import { translate } from '@/utils/i18n'
 import emitter from '@/utils/emitter'
 import { optionExists } from '@/utils/util'
+
+import dataEditor from '@/components/form-designer/setting-panel/property-editor/table/data-editor.vue'
 import columnsEditor from '@/components/form-designer/setting-panel/property-editor/table/columns-editor.vue'
 import dataSourceEditor from '@/components/form-designer/setting-panel/property-editor/table/data-source-editor.vue'
 
@@ -94,8 +96,6 @@ export const createRadioGroupEditor = function (
   propLabelKey,
   configs
 ) {
-  console.log(1)
-
   return {
     props: {
       optionModel: Object
@@ -220,6 +220,28 @@ export const createColorEditor = function (propName, propLabelKey) {
   }
 }
 
+//表格静态数据编辑器
+export const createDataEditor = function (propName, propLabelKey) {
+  return {
+    props: {
+      optionModel: Object
+    },
+    render() {
+      return (
+        <el-form-item label={translate(propLabelKey)}>
+          <dataEditor
+            optionModel={this.optionModel}
+            onSubmit={(data) => {
+              console.log('data', data)
+              this.optionModel.data = data
+            }}
+          />
+        </el-form-item>
+      )
+    }
+  }
+}
+
 //表格列编辑器
 export const createColumnsEditor = function (propName, propLabelKey) {
   return {
@@ -241,7 +263,7 @@ export const createColumnsEditor = function (propName, propLabelKey) {
   }
 }
 
-//表格列编辑器
+//表格数据源编辑器
 export const createDataSourceEditor = function (propLabelKey) {
   return {
     props: {
@@ -251,11 +273,10 @@ export const createDataSourceEditor = function (propLabelKey) {
       return (
         <el-form-item label={translate(propLabelKey)}>
           <dataSourceEditor
-            data={this.optionModel['data-source']}
-            disabled={this.optionModel['use-data-source']}
-            // onSubmit={(columns) => {
-            //   this.optionModel.columns = JSON.stringify(columns)
-            // }}
+            optionModel={this.optionModel}
+            onSubmit={(options) => {
+              this.optionModel['data-source'] = JSON.parse(options)
+            }}
           />
         </el-form-item>
       )

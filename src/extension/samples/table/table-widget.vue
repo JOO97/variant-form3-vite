@@ -26,15 +26,15 @@
           :label="operations.label"
           :width="operations.width || ''"
         >
-          <template #default="scope">
+          <template #default="{ row, $index }">
             <el-button
               v-for="btn in operations.list"
               :key="btn.name"
               :type="btn.type"
               :size="btn.size"
               :circle="btn.circle"
-              @click="handleOperationBtnClick"
-              >{{ btn.name }}</el-button
+              @click="handleOperationBtnClick(btn.name, $index, row)"
+              >{{ btn.label }}</el-button
             >
           </template>
         </el-table-column>
@@ -43,9 +43,9 @@
         <el-pagination
           style="margin-top: 15px"
           background
-          layout="prev, pager, next"
-          v-model="page.current"
-          :page-size="page.size"
+          layout="total,sizes,prev, pager, next"
+          v-model="currentPage"
+          :page-size="pageSize"
           :total="data.length"
           v-if="usePagination"
           @size-change="handlePageSizeChange"
@@ -66,6 +66,8 @@ import fieldMixin from '@/components/form-designer/form-widget/field-widget/fiel
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
+const Request = axios.create()
+
 export default {
   name: 'table-widget',
   componentName: 'FieldWidget', //必须固定为FieldWidget，用于接收父级组件的broadcast事件
@@ -73,6 +75,7 @@ export default {
   components: {
     StaticContentWrapper
   },
+  inject: ['onOperationClick'],
   props: {
     field: Object,
     parentWidget: Object,
@@ -101,10 +104,8 @@ export default {
   data() {
     return {
       data: [],
-      page: {
-        size: 15,
-        current: 1
-      }
+      pageSize: 10,
+      currentPage: 1
     }
   },
   computed: {
@@ -133,21 +134,10 @@ export default {
       return bindProps
     },
     columns() {
-      const {
-        columns: columnsStr,
-        'show-operation': showOperation,
-        operations
-      } = this.field.options
+      const { columns: columnsStr } = this.field.options
       let r = ''
       try {
         const columns = JSON.parse(columnsStr)
-        // if (showOperation) {
-        //   columns.push({
-        //     prop: 'operation',
-        //     ...operations
-        //   })
-        // }
-        console.log(columns)
         r = columns
       } catch (error) {
         r = []
@@ -162,9 +152,9 @@ export default {
     }
   },
   watch: {
+    //是否使用数据源
     'field.options.use-data-source': {
       handler(nVal) {
-        console.log('new', nVal)
         if (nVal) {
           this.reqData()
         } else {
@@ -177,68 +167,173 @@ export default {
         }
       },
       immediate: true
+    },
+    //表格的静态数据变化
+    'field.options.data'(nVal) {
+      if (this.field.options['use-data-source']) return
+      this.data = JSON.parse(nVal)
+    },
+    'field.options.data-source': {
+      handler(nVal) {
+        if (!this.field.options['use-data-source']) return
+        this.reqData()
+      }
+    },
+    'field.options.onMounted': {
+      handler(nVal) {
+        // console.log('watch', nVal)
+        // if (!!nVal) this.handleOnMounted()
+      },
+      immediate: true
     }
   },
-
   created() {
     this.registerToRefList()
     this.initEventHandler()
+
+    this.handleOnCreated()
   },
-  mounted() {},
+  mounted() {
+    this.handleOnMounted()
+  },
   beforeUnmount() {
-    this.unregisterFromRefList()
+    // this.unregisterFromRefList()
   },
   methods: {
-    handelCloseCustomEvent() {
-      if (!!this.field.options.onClose) {
-        let changeFn = new Function(this.field.options.onClose)
-        changeFn.call(this)
-      }
-    },
     /**
      * 获取表单数据
      */
     reqData() {
+      this.ElMessage = ElMessage
       if (!this.field.options['use-data-source']) return
       let {
-        'data-source': { request, beforeRequest, afterRequest }
+        'data-source': { request, onBeforeRequest, onAfterResponse }
       } = this.field.options
-      if (beforeRequest) {
-        const beforeRequestFn = new Function('req', beforeRequest)
-        request = beforeRequestFn.call(this, request)
+      if (onBeforeRequest) {
+        //请求拦截
+        Request.interceptors.request.handlers = []
+        Request.interceptors.request.use(
+          (config) => {
+            const beforeRequestFn = new Function('config', onBeforeRequest)
+            return (request = beforeRequestFn.call(this, config))
+          },
+          (error) => {
+            console.log(error) //调试用
+            return Promise.reject(error)
+          }
+        )
       }
-      axios
-        .request({
-          url: request.url,
-          method: request.method
-        })
-        .then(({ status, statusText, data }) => {
-          if (status === 200) {
-            if (afterRequest) {
-              const afterRequestFn = new Function('res', afterRequest)
-              data = afterRequestFn.call(this, data)
-              this.data = data
-            }
+      if (onAfterResponse) {
+        //响应拦截
+        Request.interceptors.response.handlers = []
+        Request.interceptors.response.use(
+          (response) => {
+            // const afterResponseFn = new Function('response', onAfterResponse)
+            return response.data
+          },
+          (error) => {
+            return Promise.reject(error)
+          }
+        )
+      }
+      let {
+        params: paramsStr,
+        data: dataStr,
+        url,
+        method,
+        headers = '{}'
+      } = request
+      const data = {}
+      if (method === 'POST' && dataStr) {
+        const dataObj = JSON.parse(dataStr)
+        Object.keys(dataObj).forEach((key) => {
+          let value = dataObj[key]
+          if (value.indexOf(':') !== -1) {
+            const tempValue = this[value.replace(':', '')]
+            if (tempValue !== undefined) data[key] = tempValue
+            else this.$message.error(`${value.replace(':', '')} is undefined`)
           } else {
-            ElMessage.error({
-              dangerouslyUseHTMLString: true,
-              message: `<strong>${status}: </strong><span>${statusText}</span>`
-            })
+            data[key] = value
           }
         })
+      }
+      if (paramsStr) {
+        const paramsArr = []
+        const params = JSON.parse(paramsStr)
+        Object.keys(params).forEach((key, index) => {
+          let value = params[key]
+          if (value.indexOf(':') !== -1) {
+            const tempValue = this[value.replace(':', '')]
+            if (tempValue !== undefined) value = tempValue
+            else {
+              delete params[key]
+              this.$message.error(`${value.replace(':', '')} is undefined`)
+              // return
+            }
+          }
+          paramsArr.push(`${key}=${value}`)
+        })
+        url += `?${paramsArr.join('&')}`
+      }
+      Request({
+        url,
+        method,
+        data,
+        headers: JSON.parse(headers)
+      }).then((res) => {
+        if (res) this.data = res
+        // else
+        //   ElMessage.error({
+        //     dangerouslyUseHTMLString: true,
+        //     message: `<strong>${status}: </strong><span>${statusText}</span>`
+        //   })
+      })
     },
     /**
-     * TODO:点击操作按钮
+     * 点击操作按钮
      */
-    handleOperationBtnClick(fnStr) {
-      if (fnStr) {
-        const fn = new Function('', fnStr)
-        fn.call(this)
+    handleOperationBtnClick(btnName, index, row) {
+      this.onOperationClick({ btnName, index, row })
+      if (!!this.field.options.onOperationButtonClick) {
+        let fn = new Function(
+          'buttonName',
+          'rowIndex',
+          'row',
+          this.field.options.onOperationButtonClick
+        )
+        fn.call(this, btnName, index, row)
       }
     },
-    //TODO: pagination---------------------------
-    handlePageSizeChange(pageSize) {},
-    handlePageCurrentChange(pageNum) {}
+    /**
+     * 改变pageSize
+     */
+    handlePageSizeChange(pageSize) {
+      this.pageSize = pageSize
+      if (!!this.field.options.onPageSizeChange) {
+        let fn = new Function(
+          'pageSize',
+          'currentPage',
+          this.field.options.onPageSizeChange
+        )
+        fn.call(this, pageSize, this.currentPage)
+      }
+      this.handlePageCurrentChange(1)
+    },
+    /**
+     * 改变当前pageNum
+     */
+    handlePageCurrentChange(pageNum) {
+      this.currentPage = pageNum
+      if (!!this.field.options.onCurrentPageChange) {
+        let fn = new Function(
+          'pageSize',
+          'currentPage',
+          this.field.options.onCurrentPageChange
+        )
+        fn.call(this, this.pageSize, pageNum)
+      }
+      this.reqData()
+    }
   }
 }
 </script>

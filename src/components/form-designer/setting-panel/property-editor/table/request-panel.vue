@@ -65,11 +65,29 @@ const result = ref('')
 
 //发送请求
 const runReq = () => {
-  const { url, method, params, headers, data } = req.value
+  let { url, method, params: paramsStr, headers, data: dataStr } = req.value
+  const data = {}
+  if (method === 'POST' && dataStr) {
+    const dataObj = JSON.parse(dataStr)
+    Object.keys(dataObj).forEach((key) => {
+      let value = dataObj[key]
+      data[key] = value
+    })
+  }
+  if (paramsStr) {
+    const paramsArr = []
+    const params = JSON.parse(paramsStr)
+    Object.keys(params).forEach((key, index) => {
+      let value = params[key]
+      paramsArr.push(`${key}=${value}`)
+    })
+    url += `?${paramsArr.join('&')}`
+  }
   axios
     .request({
       url,
-      method
+      method,
+      data
     })
     .then(({ status, statusText, data }) => {
       if (status === 200) {

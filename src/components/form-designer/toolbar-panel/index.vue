@@ -42,6 +42,7 @@
       >
         <svg-icon icon-class="node-tree"
       /></el-button>
+      <el-button @click="showRunningPanel = true"> PREVIEW </el-button>
     </div>
 
     <el-drawer
@@ -133,6 +134,13 @@
         :fullscreen="layoutType === 'H5' || layoutType === 'Pad'"
       >
         <div>
+          <div>
+            <el-button @click="test('data')">setValue</el-button>
+            <el-button @click="test('visible')">setBtnVisible</el-button>
+            <el-button @click="test('columns')">setColumns</el-button>
+            <el-button @click="test">test</el-button>
+            <el-button @click="test">test</el-button>
+          </div>
           <div
             class="form-render-wrapper"
             :class="[
@@ -152,6 +160,7 @@
               @appendButtonClick="testOnAppendButtonClick"
               @buttonClick="testOnButtonClick"
               @formChange="handleFormChange"
+              @tableOperation="handleTableOperation"
             >
             </VFormRender>
           </div>
@@ -450,6 +459,20 @@
         </template>
       </el-dialog>
     </div>
+
+    <el-dialog
+      title="TEST"
+      v-model="showRunningPanel"
+      :show-close="true"
+      custom-class="drag-dialog small-padding-dialog"
+      center
+      width="65%"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :destroy-on-close="true"
+    >
+      <RunningPanel />
+    </el-dialog>
   </div>
 </template>
 
@@ -472,13 +495,16 @@ import loadBeautifier from '@/utils/beautifierLoader'
 import { saveAs } from 'file-saver'
 import axios from 'axios'
 
+import RunningPanel from '@/components/running-panel'
+
 export default {
   name: 'ToolbarPanel',
   mixins: [i18n],
   components: {
     VFormRender,
     CodeEditor,
-    Clipboard
+    Clipboard,
+    RunningPanel
   },
   props: {
     designer: Object
@@ -516,29 +542,34 @@ export default {
       activeSFCTab: 'vue2',
 
       testFormData: {
-        // 'userName': '666888',
-        // 'productItems': [
-        //   {'pName': 'iPhone12', 'pNum': 10},
-        //   {'pName': 'P50', 'pNum': 16},
-        // ]
-
+        table4857: [
+          {
+            date: 'xxxx',
+            name: 'joo',
+            address: 'xm'
+          },
+          {
+            date: 'xxxx',
+            name: 'joo1',
+            address: 'xm'
+          }
+        ],
         select62173: 2
       },
+
       testOptionData: {
         select62173: [
           { label: '01', value: 1 },
           { label: '22', value: 2 },
           { label: '333', value: 3 }
         ]
-      }
+      },
+      showRunningPanel: false
     }
   },
   computed: {
     formJson() {
       return {
-        // widgetList: this.designer.widgetList,
-        // formConfig: this.designer.formConfig
-
         widgetList: deepClone(this.designer.widgetList),
         formConfig: deepClone(this.designer.formConfig)
       }
@@ -1816,6 +1847,58 @@ export default {
           this.designer.setSelected(foundW)
         }
       }
+    },
+    /**
+     * 监听table组件向外传递的事件
+     * @param {object} payload
+     * name 组件唯一名称
+     * eventName 事件名称
+     * payload 事件参数
+     */
+    handleTableOperation({ name, eventName, payload }) {
+      console.log('handleTableOperation', name, eventName, payload)
+      // const form = {
+      //   input12931: '11',
+      //   input23031: '111',
+      //   switch96070: true,
+      //   textarea21654: '111',
+      //   input113152: '11',
+      //   input40240: '11',
+      //   checkbox63174: [1],
+      //   input78584: '2',
+      //   timerange47503: ['15:15:07', '16:15:07'],
+      //   slider54714: null,
+      //   textarea64794: '000'
+      // }
+      // Object.keys(form).forEach((key) => {
+      //   console.log(key, form[key])
+      //   this.testFormData[key] = form[key]
+      //   this.$refs.preForm.getWidgetRef(key).setValue(form[key])
+      // })
+    },
+    test(type) {
+      const table = this.$refs.preForm.getWidgetRef('table33633')
+      if (type === 'data') {
+        table.setValue([
+          {
+            input12931: '11',
+            input23031: '111',
+            switch96070: true,
+            textarea21654: '111',
+            input113152: '11',
+            input40240: '11',
+            checkbox63174: [1],
+            input78584: '2',
+            timerange47503: ['15:15:07', '16:15:07'],
+            slider54714: null,
+            textarea64794: '000'
+          }
+        ])
+      } else if (type === 'visible') {
+        table.setOperationBtnVisible('edit')
+      } else if (type === 'columns') {
+      }
+      console.log('table', table, table.getColumns())
     }
   }
 }

@@ -108,29 +108,32 @@ export const tableSchema = {
         {
           label: '查看',
           name: 'detail',
-          type: 'text',
+          type: 'primary',
           size: 'small',
           circle: false,
           disable: '',
-          visible: true
+          visible: true,
+          plain: true
         },
         {
           label: '编辑',
           name: 'edit',
-          type: 'text',
+          type: 'success',
           size: 'small',
           circle: false,
           visible: true,
-          disable: ''
+          disable: '',
+          plain: true
         },
         {
           label: '删除',
           name: 'delete',
-          type: 'text',
+          type: 'danger',
           size: 'small',
           circle: false,
           visible: true,
-          disable: ''
+          disable: '',
+          plain: true
         }
       ]
     },

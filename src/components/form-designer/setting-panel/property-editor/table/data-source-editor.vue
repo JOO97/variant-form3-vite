@@ -181,9 +181,7 @@ const afterResponse = ref({
 
 //提交结果
 const handleSubmit = () => {
-  console.log('beforeRequest.value.handler', beforeRequest.value.handler)
   const result = { request: {} }
-
   //TODO: 数据校验
   result.onBeforeRequest = beforeRequest.value.handler
   result.onAfterResponse = afterResponse.value.handler

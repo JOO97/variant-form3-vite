@@ -11,15 +11,20 @@
     :sub-form-row-id="subFormRowId"
   >
     <div>
-      <el-table style="width: 100%" v-bind="tableProps" :data="data">
-        <template v-for="item in columns" :key="item.prop">
-          <el-table-column
-            v-bind="item"
-            :prop="item.prop"
-            :label="item.label"
-            :width="item.width || ''"
-          />
-        </template>
+      <el-table
+        style="width: 100%"
+        v-bind="tableProps"
+        :data="data"
+        ref="tableWidget"
+      >
+        <el-table-column
+          v-for="(item, index) in columns"
+          :key="item.prop + index"
+          v-bind="item"
+          :prop="item.prop"
+          :label="item.label"
+          :width="item.width || ''"
+        />
         <el-table-column
           v-if="field.options['show-operation']"
           prop="operation"
@@ -27,15 +32,16 @@
           :width="operations.width || ''"
         >
           <template #default="{ row, $index }">
-            <el-button
-              v-for="btn in operations.list"
-              :key="btn.name"
-              :type="btn.type"
-              :size="btn.size"
-              :circle="btn.circle"
-              @click="handleOperationBtnClick(btn.name, $index, row)"
-              >{{ btn.label }}</el-button
-            >
+            <template v-for="btn in operations.list" :key="btn.name">
+              <el-button
+                v-if="btn.visible"
+                :type="btn.type"
+                :size="btn.size"
+                :circle="btn.circle"
+                @click="handleOperationBtnClick(btn.name, $index, row)"
+                >{{ btn.label }}</el-button
+              >
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -75,8 +81,8 @@ export default {
   components: {
     StaticContentWrapper
   },
-  inject: ['onOperationClick'],
   props: {
+    formModel: Object,
     field: Object,
     parentWidget: Object,
     parentList: Array,
@@ -99,11 +105,16 @@ export default {
     subFormRowId: {
       /* 子表单组件行Id，唯一id且不可变 */ type: String,
       default: ''
+    },
+    tableFieldScheme: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
     return {
       data: [],
+      columns: [],
       pageSize: 10,
       currentPage: 1
     }
@@ -133,17 +144,6 @@ export default {
       })
       return bindProps
     },
-    columns() {
-      const { columns: columnsStr } = this.field.options
-      let r = ''
-      try {
-        const columns = JSON.parse(columnsStr)
-        r = columns
-      } catch (error) {
-        r = []
-      }
-      return r
-    },
     operations() {
       return this.field.options.operations
     },
@@ -155,6 +155,10 @@ export default {
     //是否使用数据源
     'field.options.use-data-source': {
       handler(nVal) {
+        if (this.formModel && this.formModel[this.field.options.name]) {
+          this.data = this.formModel[this.field.options.name]
+          return
+        }
         if (nVal) {
           this.reqData()
         } else {
@@ -168,10 +172,32 @@ export default {
       },
       immediate: true
     },
+    formModel: {
+      handler(nVal) {
+        if (this.formModel && this.formModel[this.field.options.name]) {
+          this.data = this.formModel[this.field.options.name]
+          return
+        }
+      },
+      deep: true
+    },
     //表格的静态数据变化
     'field.options.data'(nVal) {
       if (this.field.options['use-data-source']) return
       this.data = JSON.parse(nVal)
+    },
+    'field.options.columns': {
+      handler(nVal) {
+        let r = ''
+        try {
+          const columns = JSON.parse(nVal)
+          r = columns
+        } catch (error) {
+          r = []
+        }
+        this.columns = r
+      },
+      immediate: true
     },
     'field.options.data-source': {
       handler(nVal) {
@@ -179,10 +205,21 @@ export default {
         this.reqData()
       }
     },
-    'field.options.onMounted': {
+    tableFieldScheme: {
       handler(nVal) {
-        // console.log('watch', nVal)
-        // if (!!nVal) this.handleOnMounted()
+        if (nVal && nVal[this.field.options.name]) {
+          this.mapFormSchemeToColumns(nVal[this.field.options.name])
+          // [
+          //   {
+          //     prop: 'id',
+          //     label: 'ID',
+          //     width: '100',
+          //     sortable: true,
+          //     fixed: false,
+          //     align: 'left'
+          //   }
+          // ]
+        }
       },
       immediate: true
     }
@@ -190,7 +227,6 @@ export default {
   created() {
     this.registerToRefList()
     this.initEventHandler()
-
     this.handleOnCreated()
   },
   mounted() {
@@ -293,7 +329,15 @@ export default {
      * 点击操作按钮
      */
     handleOperationBtnClick(btnName, index, row) {
-      this.onOperationClick({ btnName, index, row })
+      this.dispatch('VFormRender', 'tableOperation', {
+        name: this.field.options.name,
+        eventName: 'operation-btn-click',
+        payload: {
+          btnName,
+          index,
+          row
+        }
+      })
       if (!!this.field.options.onOperationButtonClick) {
         let fn = new Function(
           'buttonName',
@@ -333,6 +377,91 @@ export default {
         fn.call(this, this.pageSize, pageNum)
       }
       this.reqData()
+    },
+    /**
+     * 根据form scheme生成表头字段
+     */
+    mapFormSchemeToColumns({ widgetList: scheme }) {
+      const formList = []
+      const mapWidgets = (list) => {
+        list.map((item) => {
+          const { cols, formItemFlag, category, widgetList } = item
+          if (formItemFlag && category !== 'container') {
+            formList.push(item)
+          } else if (widgetList) {
+            mapWidgets(widgetList)
+          } else if (cols) {
+            mapWidgets(cols)
+          }
+        })
+      }
+      mapWidgets(scheme)
+      const columns = formList.map(({ options }) => {
+        const { label, name: prop, labelAlign: align } = options
+        return {
+          prop,
+          label,
+          align: align ? align : 'left',
+          width: '',
+          sortable: false,
+          fixed: false
+        }
+      })
+      return columns
+    },
+
+    //重写组件的公共方法------------------------------
+    /**
+     * 获取table data
+     */
+    getValue() {
+      return this.data
+    },
+    /**
+     * 设置table data
+     * @param {Array} data 数据
+     */
+    setValue(data) {
+      this.data = data
+    },
+    /**
+     * 获取table columns
+     */
+    getColumns() {
+      return this.columns
+    },
+    /**
+     * 设置table columns
+     * @param {Array} columns
+     */
+    setColumns(columns) {
+      this.columns = columns
+    },
+    /**
+     * 设置table columns通过scheme
+     * @param {Array} columns
+     */
+    setColumnsByScheme(scheme) {
+      console.log('scheme', scheme)
+      const columns = this.mapFormSchemeToColumns(scheme)
+      this.setColumns(columns)
+    },
+    /**
+     * 设置操作按钮的可见性
+     * @param {string} btnName 按钮名称
+     * @param {boolean} visible 状态 (为null的话，将当前状态取反)
+     */
+    setOperationBtnVisible(btnName, visible = null) {
+      const { list } = this.field.options.operations
+      list.forEach((item) => {
+        if (item.name === btnName) {
+          if (visible === null) {
+            item.visible = !item.visible
+          } else {
+            item.visible = visible
+          }
+        }
+      })
     }
   }
 }

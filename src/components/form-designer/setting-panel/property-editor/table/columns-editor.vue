@@ -111,13 +111,14 @@ const sortable = (className) => {
     onEnd({ newIndex, oldIndex }) {
       if (newIndex === oldIndex) return
       tableData.splice(newIndex, 0, tableData.splice(oldIndex, 1)[0])
+      console.log('tableData', tableData)
     }
   })
 }
 
 //表格数据
 const tableData = reactive(props.data.map((item) => item))
-
+console.log('tableData', tableData)
 //列
 const tableColumns = reactive([
   {
@@ -202,7 +203,6 @@ const handleAddRow = (index, row) => {
   })
 }
 const handleRemoveRow = (index, row) => {
-  console.log('handleRemoveRow', index, row)
   tableData.splice(index, 1)
 }
 
@@ -210,7 +210,6 @@ const handleRemoveRow = (index, row) => {
 const handleSubmit = () => {
   //TODO: 数据校验
   emit('submit', toRaw(tableData))
-  console.log('tableData', tableData)
   dialogVisible.value = false
 }
 </script>

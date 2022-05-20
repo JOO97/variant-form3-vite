@@ -17,13 +17,6 @@ export default {
   components: {
     VFormDesigner
   },
-  provide() {
-    return {
-      onOperationClick: (data) => {
-        console.log('app ', data)
-      }
-    }
-  },
   data() {
     return {
       formJson: {

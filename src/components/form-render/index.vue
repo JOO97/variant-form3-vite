@@ -46,6 +46,7 @@
           :parent-list="widgetList"
           :index-of-parent-list="index"
           :parent-widget="null"
+          :table-field-scheme="tableFieldScheme"
         >
           <!-- 递归传递插槽！！！ -->
           <template v-for="slot in Object.keys($slots)" v-slot:[slot]="scope">
@@ -79,8 +80,6 @@ export default {
   componentName: 'VFormRender',
   mixins: [emitter, i18n],
   components: {
-    //ElForm,
-
     ...FieldComponents
   },
   props: {
@@ -103,6 +102,11 @@ export default {
       //是否表单预览状态
       type: Boolean,
       default: false
+    },
+    tableFieldScheme: {
+      //表格组件的字段scheme(通过form的scheme动态生成表头)
+      type: Object,
+      default: () => {}
     }
   },
   provide() {
@@ -306,6 +310,9 @@ export default {
           let initialValue = this.formData[wItem.options.name]
           this.formDataModel[wItem.options.name] = deepClone(initialValue)
         }
+      } else if (wItem.type === 'table') {
+        this.formDataModel[wItem.options.name] =
+          this.formData[wItem.options.name]
       }
     },
 
@@ -559,6 +566,7 @@ export default {
 
     setFormData(formData) {
       //设置表单数据
+      console.log('this.formDataMode', this.formDataMode)
       Object.keys(this.formDataModel).forEach((propName) => {
         if (!!formData && formData.hasOwnProperty(propName)) {
           this.formDataModel[propName] = deepClone(formData[propName])

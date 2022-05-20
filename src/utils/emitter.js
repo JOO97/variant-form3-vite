@@ -1,16 +1,15 @@
-
 function _broadcast(componentName, eventName, params) {
   this.$children.forEach(function (child) {
-    let name = child.$options.componentName;
+    let name = child.$options.componentName
     if (name === componentName) {
       //child.$emit.apply(child, [eventName].concat(params));
       if (!!child.emit$) {
         child.emit$.call(child, eventName, params)
       }
     } else {
-      _broadcast.apply(child, [componentName, eventName].concat([params]));
+      _broadcast.apply(child, [componentName, eventName].concat([params]))
     }
-  });
+  })
 }
 
 export default {
@@ -24,19 +23,19 @@ export default {
     emit$(eventName, data) {
       if (this.vfEvents[eventName]) {
         this.vfEvents[eventName].forEach((fn) => {
-          fn(data);
-        });
+          fn(data)
+        })
       }
     },
 
     on$(eventName, fn) {
-      this.vfEvents[eventName] = this.vfEvents[eventName] || [];
-      this.vfEvents[eventName].push(fn);
+      this.vfEvents[eventName] = this.vfEvents[eventName] || []
+      this.vfEvents[eventName].push(fn)
     },
 
     off$(eventName, fn) {
       if (this.vfEvents[eventName]) {
-        if ((fn === undefined) || (fn === null)) {
+        if (fn === undefined || fn === null) {
           this.vfEvents[eventName].length = 0
           return
         }
@@ -49,16 +48,16 @@ export default {
         }
       }
     },
-
+    //NOTE: dispatch 组件间事件传递
     dispatch: function dispatch(componentName, eventName, params) {
-      let parent = this.$parent || this.$root;
-      let name = parent.$options.componentName;
+      let parent = this.$parent || this.$root
+      let name = parent.$options.componentName
 
       while (parent && (!name || name !== componentName)) {
-        parent = parent.$parent;
+        parent = parent.$parent
 
         if (parent) {
-          name = parent.$options.componentName;
+          name = parent.$options.componentName
         }
       }
       if (parent) {
@@ -66,7 +65,7 @@ export default {
           parent.emit$.call(parent, eventName, params)
 
           if (componentName === 'VFormRender') {
-            parent.$emit(eventName, params)  //执行原生$emit，以便可以用@进行声明式事件处理！！
+            parent.$emit(eventName, params) //执行原生$emit，以便可以用@进行声明式事件处理！！
           }
         }
       }
@@ -76,8 +75,9 @@ export default {
       /* Vue3移除了$children属性，_broadcast方法已不能使用！！ */
       //_broadcast.call(this, componentName, eventName, params);
 
-      if (!!this.widgetRefList) {  //FormRender只需遍历自身的widgetRefList属性
-        Object.keys(this.widgetRefList).forEach(refName => {
+      if (!!this.widgetRefList) {
+        //FormRender只需遍历自身的widgetRefList属性
+        Object.keys(this.widgetRefList).forEach((refName) => {
           let cmpName = this.widgetRefList[refName].$options.componentName
           if (cmpName === componentName) {
             let foundRef = this.widgetRefList[refName]
@@ -86,8 +86,9 @@ export default {
         })
       }
 
-      if (!!this.refList) {  //其他组件遍历inject的refList属性
-        Object.keys(this.refList).forEach(refName => {
+      if (!!this.refList) {
+        //其他组件遍历inject的refList属性
+        Object.keys(this.refList).forEach((refName) => {
           let cmpName = this.refList[refName].$options.componentName
           if (cmpName === componentName) {
             let foundRef = this.refList[refName]
@@ -97,4 +98,4 @@ export default {
       }
     }
   }
-};
+}

@@ -1,0 +1,104 @@
+{
+  "widgetList": [
+    {
+      "key": 31412,
+      "type": "table",
+      "icon": "table",
+      "formItemFlag": false,
+      "options": {
+        "name": "table57796",
+        "label": "table",
+        "customClass": [],
+        "height": "",
+        "max-height": "",
+        "stripe": true,
+        "border": true,
+        "size": "default",
+        "fit": true,
+        "show-header": true,
+        "highlight-current-row": true,
+        "empty-text": "No Data",
+        "layout": "auto",
+        "scrollbar-always-on": false,
+        "show-operation": true,
+        "operations": {
+          "label": "操作",
+          "width": "200",
+          "list": [
+            {
+              "label": "查看",
+              "name": "detail",
+              "type": "primary",
+              "size": "small",
+              "circle": false,
+              "disable": "",
+              "visible": true,
+              "plain": true
+            },
+            {
+              "label": "编辑",
+              "name": "edit",
+              "type": "success",
+              "size": "small",
+              "circle": false,
+              "visible": true,
+              "disable": "",
+              "plain": true
+            },
+            {
+              "label": "删除",
+              "name": "delete",
+              "type": "danger",
+              "size": "small",
+              "circle": false,
+              "visible": true,
+              "disable": "",
+              "plain": true
+            }
+          ]
+        },
+        "usePagination": false,
+        "columns": "[\n       {\n        \"prop\": \"id\",\n        \"label\": \"ID\",\n        \"width\":\"\",\n        \"sortable\":true,\n        \"fixed\":false,\n        \"align\":\"left\"\n      },\n      {\n        \"prop\": \"date\",\n        \"label\": \"日期\",\n        \"width\":\"\",\n        \"sortable\":false,\n        \"fixed\":false,\n        \"align\":\"left\"\n      }, {\n        \"prop\": \"name\",\n        \"label\": \"名字\",\n        \"width\":\"\",\n        \"sortable\":false,\n        \"fixed\":false,\n        \"align\":\"left\"\n      }, {\n        \"prop\": \"address\",\n        \"label\": \"地址\",\n         \"width\":\"\",\n        \"sortable\":false,\n        \"fixed\":false,\n        \"align\":\"left\"\n      }\n    ]",
+        "data": "[{\n      \"date\":\"2022-12-22\",\n      \"name\": \"joo\",\n      \"address\": \"xm\"\n    },\n    {\n      \"date\":\"2022-12-22\",\n      \"name\": \"joo1\",\n      \"address\": \"xm\"\n    }\n  ]",
+        "use-data-source": false,
+        "data-source": {
+          "type": "api",
+          "name": "table数据api",
+          "request": {
+            "url": "https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/tableData",
+            "method": "GET",
+            "headers": "{}",
+            "params": "{}",
+            "data": "{}"
+          },
+          "onBeforeRequest": "return config",
+          "onAfterResponse": "return response.data"
+        },
+        "onCreated": "",
+        "onMounted": "",
+        "onPageSizeChange": "",
+        "onCurrentPageChange": "",
+        "onOperationButtonClick": ""
+      },
+      "id": "table57796"
+    }
+  ],
+  "formConfig": {
+    "modelName": "formData",
+    "refName": "vForm",
+    "rulesName": "rules",
+    "labelWidth": 80,
+    "labelPosition": "left",
+    "size": "",
+    "labelAlign": "label-left-align",
+    "cssCode": "",
+    "customClass": [],
+    "functions": "",
+    "layoutType": "PC",
+    "jsonVersion": 3,
+    "onFormCreated": "",
+    "onFormMounted": "\nconst table = this.getWidgetRef('table57796')\naxios.get('https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/tableData').then(res => {\n  table.setValue(res.data)\n})\naxios.get('https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/formScheme').then(res => {\n  table.setColumnsByScheme(res.data)\n})",
+    "onFormDataChange": "",
+    "onFormValidate": ""
+  }
+}

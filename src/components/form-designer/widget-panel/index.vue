@@ -158,9 +158,12 @@
             >
           </template>
 
-          <template v-for="(ft, idx) in formTemplates">
+          <template
+            v-for="(ft, idx) in formTemplates"
+            :key="idx + '_formTemplates'"
+          >
             <el-card
-              :bord-style="{ padding: '0' }"
+              :body-style="{ padding: '0' }"
               shadow="hover"
               class="ft-card"
             >

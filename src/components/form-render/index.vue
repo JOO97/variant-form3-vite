@@ -181,16 +181,20 @@ export default {
     }
   },
   watch: {
-    //
+    formData: {
+      handler(nVal) {},
+      immediate: true,
+      deep: true
+    }
   },
   created() {
     this.buildFormModel(!this.formJsonObj ? null : this.formJsonObj.widgetList)
     this.initFormObject()
   },
   mounted() {
-    console.log('formJson', this.formJson)
-    console.log('formData', this.formData)
-    console.log('optionData', this.optionData)
+    console.log('render formJson', this.formJson)
+    console.log('render formData', this.formData)
+    console.log('render optionData', this.optionData)
     this.initLocale()
     this.handleOnMounted()
   },
@@ -566,7 +570,6 @@ export default {
 
     setFormData(formData) {
       //设置表单数据
-      console.log('this.formDataMode', this.formDataMode)
       Object.keys(this.formDataModel).forEach((propName) => {
         if (!!formData && formData.hasOwnProperty(propName)) {
           this.formDataModel[propName] = deepClone(formData[propName])

@@ -42,7 +42,6 @@
       >
         <svg-icon icon-class="node-tree"
       /></el-button>
-      <el-button @click="showRunningPanel = true"> PREVIEW </el-button>
     </div>
 
     <el-drawer
@@ -135,11 +134,7 @@
       >
         <div>
           <div>
-            <el-button @click="test('data')">setValue</el-button>
-            <el-button @click="test('visible')">setBtnVisible</el-button>
-            <el-button @click="test('columns')">setColumns</el-button>
-            <el-button @click="test">test</el-button>
-            <el-button @click="test">test</el-button>
+            <el-button @click="test">testTable</el-button>
           </div>
           <div
             class="form-render-wrapper"
@@ -182,10 +177,6 @@
             <el-button @click="showPreviewDialogFlag = false">{{
               i18nt('designer.hint.closePreview')
             }}</el-button>
-            <el-button v-if="false" @click="testLoadForm">Test Load</el-button>
-            <el-button v-if="false" @click="testSetFormJson"
-              >Test SFJ</el-button
-            >
           </div>
         </template>
       </el-dialog>
@@ -459,20 +450,6 @@
         </template>
       </el-dialog>
     </div>
-
-    <el-dialog
-      title="TEST"
-      v-model="showRunningPanel"
-      :show-close="true"
-      custom-class="drag-dialog small-padding-dialog"
-      center
-      width="65%"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :destroy-on-close="true"
-    >
-      <RunningPanel />
-    </el-dialog>
   </div>
 </template>
 
@@ -495,16 +472,13 @@ import loadBeautifier from '@/utils/beautifierLoader'
 import { saveAs } from 'file-saver'
 import axios from 'axios'
 
-import RunningPanel from '@/components/running-panel'
-
 export default {
   name: 'ToolbarPanel',
   mixins: [i18n],
   components: {
     VFormRender,
     CodeEditor,
-    Clipboard,
-    RunningPanel
+    Clipboard
   },
   props: {
     designer: Object
@@ -542,19 +516,14 @@ export default {
       activeSFCTab: 'vue2',
 
       testFormData: {
-        table4857: [
-          {
-            date: 'xxxx',
-            name: 'joo',
-            address: 'xm'
-          },
-          {
-            date: 'xxxx',
-            name: 'joo1',
-            address: 'xm'
-          }
-        ],
-        select62173: 2
+        id: 10001,
+        name: '张三',
+        timeRange: [1],
+        phone: '13295923180',
+        address: '厦门市',
+        deliveryTime: ['14:06:58', '15:06:58'],
+        price: null,
+        info: '123'
       },
 
       testOptionData: {
@@ -563,8 +532,7 @@ export default {
           { label: '22', value: 2 },
           { label: '333', value: 3 }
         ]
-      },
-      showRunningPanel: false
+      }
     }
   },
   computed: {
@@ -970,10 +938,6 @@ export default {
         .then((res) => {
           let newFormJson = res.data
           this.$refs.preForm.setFormJson(newFormJson)
-          // let newFormData = {'input30696': '668899'}
-          // this.$refs.preForm.setFormData(newFormData)
-
-          console.log('test', 'aaaaaaaa')
           this.$nextTick(() => {
             let newFormData = { input30696: '668899' }
             this.$refs.preForm.setFormData(newFormData)
@@ -988,27 +952,29 @@ export default {
       let newFormJson = {
         widgetList: [
           {
+            key: 50043,
             type: 'static-text',
             icon: 'static-text',
             formItemFlag: false,
             options: {
-              name: 'statictext111193',
+              name: 'title',
               columnWidth: '200px',
               hidden: false,
-              textContent: '多列表单',
+              textContent: '列表',
               customClass: [],
               onCreated: '',
               onMounted: '',
               label: 'static-text'
             },
-            id: 'statictext111193'
+            id: 'statictext68608'
           },
           {
+            key: 99874,
             type: 'divider',
             icon: 'divider',
             formItemFlag: false,
             options: {
-              name: 'divider102346',
+              name: 'divider',
               label: '',
               columnWidth: '200px',
               direction: 'horizontal',
@@ -1018,788 +984,115 @@ export default {
               onCreated: '',
               onMounted: ''
             },
-            id: 'divider102346'
+            id: 'divider44861'
           },
           {
-            type: 'grid',
-            category: 'container',
-            icon: 'grid',
-            cols: [
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'input',
-                    icon: 'text-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'input12931',
-                      label: '发件人姓名',
-                      labelAlign: '',
-                      type: 'text',
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      clearable: true,
-                      showPassword: false,
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: [],
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      prefixIcon: '',
-                      suffixIcon: '',
-                      appendButton: false,
-                      appendButtonDisabled: false,
-                      buttonIcon: 'el-icon-search',
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'input12931'
-                  }
-                ],
-                options: {
-                  name: 'gridCol25469',
-                  hidden: false,
-                  span: 12,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: []
-                },
-                id: 'grid-col-25469'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'input',
-                    icon: 'text-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'input23031',
-                      label: '发件人号码',
-                      labelAlign: '',
-                      type: 'text',
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      clearable: true,
-                      showPassword: false,
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      prefixIcon: '',
-                      suffixIcon: '',
-                      appendButton: false,
-                      appendButtonDisabled: false,
-                      buttonIcon: 'el-icon-search',
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'input23031'
-                  }
-                ],
-                options: {
-                  name: 'gridCol25125',
-                  hidden: false,
-                  span: 12,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-25125'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'switch',
-                    icon: 'switch-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'switch96070',
-                      label: '是否保密',
-                      labelAlign: '',
-                      defaultValue: true,
-                      columnWidth: '200px',
-                      labelWidth: null,
-                      labelHidden: false,
-                      disabled: false,
-                      hidden: false,
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      switchWidth: 40,
-                      activeText: '',
-                      inactiveText: '',
-                      activeColor: null,
-                      inactiveColor: null,
-                      onCreated: '',
-                      onMounted: '',
-                      onChange: '',
-                      onValidate: ''
-                    },
-                    id: 'switch96070'
-                  }
-                ],
-                options: {
-                  name: 'gridCol44470',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-44470'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'textarea',
-                    icon: 'textarea-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'textarea21654',
-                      label: '发件人地址',
-                      labelAlign: '',
-                      rows: 3,
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'textarea21654'
-                  }
-                ],
-                options: {
-                  name: 'gridCol98223',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-98223'
-              }
-            ],
-            options: {
-              name: 'grid35834',
-              hidden: false,
-              gutter: 12,
-              customClass: ''
-            },
-            id: 'grid35834'
-          },
-          {
-            type: 'divider',
-            icon: 'divider',
+            key: 33055,
+            type: 'table',
+            icon: 'table',
             formItemFlag: false,
             options: {
-              name: 'divider69240',
-              label: '',
-              columnWidth: '200px',
-              direction: 'horizontal',
-              contentPosition: 'center',
-              hidden: false,
-              customClass: '',
-              onCreated: '',
-              onMounted: ''
-            },
-            id: 'divider69240'
-          },
-          {
-            type: 'grid',
-            category: 'container',
-            icon: 'grid',
-            cols: [
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'input',
-                    icon: 'text-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'input113152',
-                      label: '收件人姓名111',
-                      labelAlign: '',
-                      type: 'text',
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      clearable: true,
-                      showPassword: false,
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: [],
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      prefixIcon: '',
-                      suffixIcon: '',
-                      appendButton: false,
-                      appendButtonDisabled: false,
-                      buttonIcon: 'el-icon-search',
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'input113152'
-                  }
-                ],
-                options: {
-                  name: 'gridCol47242',
-                  hidden: false,
-                  span: 12,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-47242'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'input',
-                    icon: 'text-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'input40240',
-                      label: '收件人号码',
-                      labelAlign: '',
-                      type: 'text',
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      clearable: true,
-                      showPassword: false,
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      prefixIcon: '',
-                      suffixIcon: '',
-                      appendButton: false,
-                      appendButtonDisabled: false,
-                      buttonIcon: 'el-icon-search',
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'input40240'
-                  }
-                ],
-                options: {
-                  name: 'gridCol27970',
-                  hidden: false,
-                  span: 12,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-27970'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'checkbox',
-                    icon: 'checkbox-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'checkbox63174',
-                      label: '接收时间段',
-                      labelAlign: '',
-                      defaultValue: [],
-                      columnWidth: '200px',
-                      size: '',
-                      displayStyle: 'inline',
-                      buttonStyle: false,
-                      border: false,
-                      labelWidth: null,
-                      labelHidden: false,
-                      disabled: false,
-                      hidden: false,
-                      optionItems: [
-                        { label: '上午9:00 - 11:30', value: 1 },
-                        { label: '下午12:30 - 18:00', value: 2 },
-                        { label: '晚上18:00 - 21:00', value: 3 }
-                      ],
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      onCreated: '',
-                      onMounted: '',
-                      onChange: '',
-                      onValidate: ''
-                    },
-                    id: 'checkbox63174'
-                  }
-                ],
-                options: {
-                  name: 'gridCol74653',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-74653'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'input',
-                    icon: 'text-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'input78584',
-                      label: '收件人地址',
-                      labelAlign: '',
-                      type: 'text',
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      clearable: true,
-                      showPassword: false,
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      prefixIcon: '',
-                      suffixIcon: '',
-                      appendButton: false,
-                      appendButtonDisabled: false,
-                      buttonIcon: 'el-icon-search',
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'input78584'
-                  }
-                ],
-                options: {
-                  name: 'gridCol63781',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-63781'
-              }
-            ],
-            options: {
-              name: 'grid114672',
-              hidden: false,
-              gutter: 12,
-              customClass: ''
-            },
-            id: 'grid114672'
-          },
-          {
-            type: 'divider',
-            icon: 'divider',
-            formItemFlag: false,
-            options: {
-              name: 'divider75887',
-              label: '',
-              columnWidth: '200px',
-              direction: 'horizontal',
-              contentPosition: 'center',
-              hidden: false,
+              name: 'table',
+              label: 'table',
               customClass: [],
+              height: '',
+              'max-height': '700',
+              stripe: true,
+              border: true,
+              size: 'large',
+              fit: true,
+              'show-header': true,
+              'highlight-current-row': true,
+              'empty-text': 'No Data',
+              layout: 'auto',
+              'scrollbar-always-on': false,
+              'show-operation': true,
+              operations: {
+                label: '操作',
+                width: '200',
+                list: [
+                  {
+                    label: '查看',
+                    name: 'detail',
+                    type: 'primary',
+                    size: 'small',
+                    circle: false,
+                    disable: '',
+                    visible: true,
+                    plain: true
+                  },
+                  {
+                    label: '编辑',
+                    name: 'edit',
+                    type: 'success',
+                    size: 'small',
+                    circle: false,
+                    visible: true,
+                    disable: '',
+                    plain: true
+                  },
+                  {
+                    label: '删除',
+                    name: 'delete',
+                    type: 'danger',
+                    size: 'small',
+                    circle: false,
+                    visible: true,
+                    disable: '',
+                    plain: true
+                  }
+                ]
+              },
+              usePagination: true,
+              columns:
+                '[{"prop":"id","label":"ID","width":"","sortable":false,"fixed":false,"align":"left"}]',
+              data: '[\n  ]',
+              'use-data-source': false,
+              'data-source': {
+                type: 'api',
+                name: 'table数据api',
+                request: {
+                  url: 'https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/tableData',
+                  method: 'GET',
+                  headers: '{}',
+                  params: '{}',
+                  data: '{}'
+                },
+                onBeforeRequest: 'return config',
+                onAfterResponse: 'return response.data'
+              },
               onCreated: '',
-              onMounted: ''
+              onMounted: '',
+              onPageSizeChange: '',
+              onCurrentPageChange: '',
+              onOperationButtonClick: ''
             },
-            id: 'divider75887'
-          },
-          {
-            type: 'grid',
-            category: 'container',
-            icon: 'grid',
-            cols: [
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'time-range',
-                    icon: 'time-range-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'timerange47503',
-                      label: '送货时间',
-                      labelAlign: '',
-                      defaultValue: null,
-                      startPlaceholder: '',
-                      endPlaceholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      clearable: true,
-                      editable: false,
-                      format: 'HH:mm:ss',
-                      required: true,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      onCreated: '',
-                      onMounted: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'timerange47503'
-                  }
-                ],
-                options: {
-                  name: 'gridCol109912',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-109912'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'slider',
-                    icon: 'slider-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'slider54714',
-                      label: '价格保护',
-                      labelAlign: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      disabled: false,
-                      hidden: false,
-                      required: false,
-                      validation: '',
-                      validationHint: '',
-                      customClass: [],
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      min: 0,
-                      max: 100,
-                      step: 10,
-                      range: false,
-                      height: null,
-                      onCreated: '',
-                      onMounted: '',
-                      onChange: '',
-                      onValidate: '',
-                      showStops: true
-                    },
-                    id: 'slider54714'
-                  }
-                ],
-                options: {
-                  name: 'gridCol114653',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-114653'
-              },
-              {
-                type: 'grid-col',
-                category: 'container',
-                icon: 'grid-col',
-                internal: true,
-                widgetList: [
-                  {
-                    type: 'textarea',
-                    icon: 'textarea-field',
-                    formItemFlag: true,
-                    options: {
-                      name: 'textarea64794',
-                      label: '其他信息',
-                      labelAlign: '',
-                      rows: 3,
-                      defaultValue: '',
-                      placeholder: '',
-                      columnWidth: '200px',
-                      size: '',
-                      labelWidth: null,
-                      labelHidden: false,
-                      readonly: false,
-                      disabled: false,
-                      hidden: false,
-                      required: false,
-                      validation: '',
-                      validationHint: '',
-                      customClass: '',
-                      labelIconClass: null,
-                      labelIconPosition: 'rear',
-                      labelTooltip: null,
-                      minLength: null,
-                      maxLength: null,
-                      showWordLimit: false,
-                      onCreated: '',
-                      onMounted: '',
-                      onInput: '',
-                      onChange: '',
-                      onFocus: '',
-                      onBlur: '',
-                      onValidate: ''
-                    },
-                    id: 'textarea64794'
-                  }
-                ],
-                options: {
-                  name: 'gridCol80867',
-                  hidden: false,
-                  span: 24,
-                  offset: 0,
-                  push: 0,
-                  pull: 0,
-                  responsive: false,
-                  md: 12,
-                  sm: 12,
-                  xs: 12,
-                  customClass: ''
-                },
-                id: 'grid-col-80867'
-              }
-            ],
-            options: {
-              name: 'grid28709',
-              hidden: false,
-              gutter: 12,
-              customClass: ''
-            },
-            id: 'grid28709'
+            id: 'table19608'
           }
         ],
         formConfig: {
           modelName: 'formData',
           refName: 'vForm',
           rulesName: 'rules',
-          labelWidth: 150,
+          labelWidth: 80,
           labelPosition: 'left',
           size: '',
-          labelAlign: 'label-right-align',
+          labelAlign: 'label-left-align',
           cssCode: '',
           customClass: [],
           functions: '',
           layoutType: 'PC',
           jsonVersion: 3,
           onFormCreated: '',
-          onFormMounted: '',
+          onFormMounted:
+            "axios\r\n  .get(\r\n    'https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/listScheme'\r\n  )\r\n  .then((res) => {\r\n    if (res.status === 200) {\r\n      this.setFormJson(res.data)\r\n    }\r\n  })",
           onFormDataChange: '',
           onFormValidate: ''
         }
       }
       this.$refs.preForm.setFormJson(newFormJson)
       this.$nextTick(() => {
-        this.$refs.preForm.setFormData({ input12931: 'asdf' })
+        // this.$refs.preForm.setFormData({ input12931: 'asdf' })
       })
     },
 
@@ -1857,48 +1150,40 @@ export default {
      */
     handleTableOperation({ name, eventName, payload }) {
       console.log('handleTableOperation', name, eventName, payload)
-      // const form = {
-      //   input12931: '11',
-      //   input23031: '111',
-      //   switch96070: true,
-      //   textarea21654: '111',
-      //   input113152: '11',
-      //   input40240: '11',
-      //   checkbox63174: [1],
-      //   input78584: '2',
-      //   timerange47503: ['15:15:07', '16:15:07'],
-      //   slider54714: null,
-      //   textarea64794: '000'
-      // }
-      // Object.keys(form).forEach((key) => {
-      //   console.log(key, form[key])
-      //   this.testFormData[key] = form[key]
-      //   this.$refs.preForm.getWidgetRef(key).setValue(form[key])
-      // })
     },
-    test(type) {
-      const table = this.$refs.preForm.getWidgetRef('table33633')
-      if (type === 'data') {
-        table.setValue([
-          {
-            input12931: '11',
-            input23031: '111',
-            switch96070: true,
-            textarea21654: '111',
-            input113152: '11',
-            input40240: '11',
-            checkbox63174: [1],
-            input78584: '2',
-            timerange47503: ['15:15:07', '16:15:07'],
-            slider54714: null,
-            textarea64794: '000'
+    /**
+     * 测试列表
+     */
+    test() {
+      axios
+        .get(
+          'https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/listScheme'
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            this.$refs.preForm.setFormJson(res.data)
+            getFormInfo()
           }
-        ])
-      } else if (type === 'visible') {
-        table.setOperationBtnVisible('edit')
-      } else if (type === 'columns') {
+        })
+
+      const getFormInfo = () => {
+        Promise.all([
+          axios.get(
+            'https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/formScheme'
+          ),
+          axios.get(
+            'https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/tableData'
+          )
+        ]).then(([res1, res2]) => {
+          const table = this.$refs.preForm.getWidgetRef('table')
+          if (res1.status === 200) {
+            table.setColumnsByScheme(res1.data)
+          }
+          if (res2.status === 200) {
+            table.setValue(res2.data)
+          }
+        })
       }
-      console.log('table', table, table.getColumns())
     }
   }
 }

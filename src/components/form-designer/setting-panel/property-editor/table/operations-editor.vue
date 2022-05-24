@@ -5,8 +5,35 @@
       :icon="Edit"
       circle
       @click="dialogVisible = true"
+      :disabled="!optionModel['show-operation']"
     />
-    <el-dialog v-model="dialogVisible" title="表格列编辑">
+    <el-dialog v-model="dialogVisible" title="操作列编辑">
+      <el-row :gutter="16">
+        <el-col :span="12">
+          <el-form-item label="列名" :label-width="80">
+            <el-input
+              v-model="formData.label"
+              type="text"
+              clearable
+              style="width: 100%"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="列宽度(px)" :label-width="100">
+            <el-input-number
+              v-model="formData.width"
+              style="width: 100%"
+              controls-position="right"
+              :min="100"
+              :max="100000000000"
+              :precision="0"
+              :step="1"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-divider>操作按钮设置</el-divider>
       <el-table v-bind="componentData" class="columns-table" row-key="prop">
         <template
           v-for="(option, index) in tableColumns"
@@ -22,7 +49,7 @@
             >
               <component
                 :is="option.type"
-                v-model="tableData[$index][option.prop]"
+                v-model="formData.list[$index][option.prop]"
               >
                 <template v-if="option.child">
                   <component
@@ -78,16 +105,24 @@
 <script setup>
 import { ref, computed, reactive, toRaw, onMounted, watch, nextTick } from 'vue'
 import { Edit, Plus, Minus } from '@element-plus/icons-vue'
-
 import Sortable from 'sortablejs'
 
+import { deepClone } from '@/utils/util'
+
 const props = defineProps({
-  data: {
+  optionModel: {
     type: Array
   }
 })
 
 const emit = defineEmits(['submit'])
+
+//表单数据
+let formData = reactive({
+  label: '操作',
+  width: '120',
+  list: []
+})
 
 //对话框
 const dialogVisible = ref(false)
@@ -96,6 +131,9 @@ watch(dialogVisible, (nVal) => {
   if (nVal) {
     nextTick(() => {
       sortable('columns-table')
+      formData.label = props.optionModel.operations.label
+      formData.width = props.optionModel.operations.width
+      formData.list = deepClone(props.optionModel.operations.list)
     })
   }
 })
@@ -110,21 +148,19 @@ const sortable = (className) => {
     // 拖拽完毕后触发
     onEnd({ newIndex, oldIndex }) {
       if (newIndex === oldIndex) return
-      tableData.splice(newIndex, 0, tableData.splice(oldIndex, 1)[0])
+      formData.list.splice(newIndex, 0, formData.list.splice(oldIndex, 1)[0])
     }
   })
 }
 
-//表格数据
-const tableData = reactive(props.data.map((item) => item))
-//列
-const tableColumns = reactive([
+//配置项
+const tableColumns = [
   {
     prop: 'draggable'
   },
   {
-    prop: 'prop',
-    label: '字段名称',
+    prop: 'name',
+    label: '操作名称',
     type: 'el-input'
   },
   {
@@ -133,51 +169,92 @@ const tableColumns = reactive([
     type: 'el-input'
   },
   {
-    prop: 'width',
-    label: '列宽',
-    type: 'el-input'
-  },
-  {
-    prop: 'sortable',
-    label: '是否排序',
-    type: 'el-switch'
-  },
-  {
-    prop: 'fixed',
-    label: '是否固定',
-    type: 'el-switch'
-  },
-  {
-    prop: 'align',
-    label: '对齐方式',
+    prop: 'type',
+    label: '按钮类型',
     type: 'el-select',
     child: {
       type: 'el-option',
       options: [
         {
-          label: 'left',
-          value: 'left'
+          label: 'default',
+          value: 'default'
         },
         {
-          label: 'center',
-          value: 'center'
+          label: 'primary',
+          value: 'primary'
         },
         {
-          label: 'right',
-          value: 'right'
+          label: 'success',
+          value: 'success'
+        },
+        {
+          label: 'warning',
+          value: 'warning'
+        },
+        {
+          label: 'danger',
+          value: 'danger'
+        },
+        {
+          label: 'info',
+          value: 'info'
         }
       ]
     }
   },
   {
-    prop: 'operation'
+    prop: 'size',
+    label: '按钮大小',
+    type: 'el-select',
+    child: {
+      type: 'el-option',
+      options: [
+        {
+          label: 'default',
+          value: 'default'
+        },
+        {
+          label: 'small',
+          value: 'small'
+        },
+        {
+          label: 'large',
+          value: 'large'
+        }
+      ]
+    }
+  },
+  {
+    prop: 'circle',
+    label: '圆角',
+    type: 'el-switch'
+  },
+  {
+    prop: 'plain',
+    label: '朴素按钮',
+    type: 'el-switch'
+  },
+  {
+    prop: 'disable',
+    label: '禁用',
+    type: 'el-switch'
+  },
+  {
+    prop: 'visible',
+    label: '显示',
+    type: 'el-switch'
+  },
+  {
+    prop: 'emit',
+    label: '抛出事件',
+    type: 'el-switch'
   }
-])
+]
 
 //component data
 const componentData = computed(() => {
   return {
-    data: tableData.map((item) => ({ ...item, draggable: true })),
+    data: formData.list.map((item) => ({ ...item, draggable: true })),
     'table-layout': 'auto',
     stripe: true,
     size: 'large',
@@ -191,7 +268,7 @@ const dragEnabled = ref(true)
 
 //增加、移除行
 const handleAddRow = (index, row) => {
-  tableData.splice(index + 1, 0, {
+  formData.list.splice(index + 1, 0, {
     prop: '',
     label: '',
     width: '',
@@ -201,13 +278,13 @@ const handleAddRow = (index, row) => {
   })
 }
 const handleRemoveRow = (index, row) => {
-  tableData.splice(index, 1)
+  formData.list.splice(index, 1)
 }
 
 //提交结果
 const handleSubmit = () => {
   //TODO: 数据校验
-  emit('submit', toRaw(tableData))
+  emit('submit', deepClone(formData))
   dialogVisible.value = false
 }
 </script>

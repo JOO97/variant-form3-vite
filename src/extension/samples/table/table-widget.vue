@@ -35,10 +35,8 @@
             <template v-for="btn in operations.list" :key="btn.name">
               <el-button
                 v-if="btn.visible"
-                :type="btn.type"
-                :size="btn.size"
-                :circle="btn.circle"
-                @click="handleOperationBtnClick(btn.name, $index, row)"
+                v-bind="btn"
+                @click="handleOperationBtnClick(btn, $index, row)"
                 >{{ btn.label }}</el-button
               >
             </template>
@@ -52,7 +50,7 @@
           layout="total,sizes,prev, pager, next"
           v-model="currentPage"
           :page-size="pageSize"
-          :total="data.length"
+          :total="total"
           v-if="usePagination"
           @size-change="handlePageSizeChange"
           @current-change="handlePageCurrentChange"
@@ -116,7 +114,8 @@ export default {
       data: [],
       columns: [],
       pageSize: 10,
-      currentPage: 1
+      currentPage: 1,
+      total: 0
     }
   },
   computed: {
@@ -317,7 +316,9 @@ export default {
         data,
         headers: JSON.parse(headers)
       }).then((res) => {
-        if (res) this.data = res
+        if (res) {
+          this.data = res
+        }
         // else
         //   ElMessage.error({
         //     dangerouslyUseHTMLString: true,
@@ -328,16 +329,18 @@ export default {
     /**
      * 点击操作按钮
      */
-    handleOperationBtnClick(btnName, index, row) {
-      this.dispatch('VFormRender', 'tableOperation', {
-        name: this.field.options.name,
-        eventName: 'operation-btn-click',
-        payload: {
-          btnName,
-          index,
-          row
-        }
-      })
+    handleOperationBtnClick({ name, emit }, index, row) {
+      if (emit) {
+        this.dispatch('VFormRender', 'tableOperation', {
+          name: this.field.options.name,
+          eventName: 'operation-btn-click',
+          payload: {
+            name,
+            index,
+            row
+          }
+        })
+      }
       if (!!this.field.options.onOperationButtonClick) {
         let fn = new Function(
           'buttonName',
@@ -345,7 +348,7 @@ export default {
           'row',
           this.field.options.onOperationButtonClick
         )
-        fn.call(this, btnName, index, row)
+        fn.call(this, name, index, row)
       }
     },
     /**
@@ -404,7 +407,8 @@ export default {
           align: align ? align : 'left',
           width: '',
           sortable: false,
-          fixed: false
+          fixed: false,
+          formCfg: options
         }
       })
       return columns
@@ -422,7 +426,20 @@ export default {
      * @param {Array} data 数据
      */
     setValue(data) {
-      this.data = data
+      //TODO: optionData映射给data
+      // const formCfg = {}
+      // if (data && data.length) {
+      //   Object.keys(data[0]).forEach((key) => {
+      //     const column = this.columns.find(
+      //       ({ prop, formOptions = {} }) => prop === key
+      //     )
+      //     formCfg[key] = column
+      //   })
+      // }
+      // console.log('formCfg', formCfg)
+      this.data = data.map((item) => {
+        return item
+      })
     },
     /**
      * 获取table columns
@@ -442,7 +459,6 @@ export default {
      * @param {Array} columns
      */
     setColumnsByScheme(scheme) {
-      console.log('scheme', scheme)
       const columns = this.mapFormSchemeToColumns(scheme)
       this.setColumns(columns)
     },

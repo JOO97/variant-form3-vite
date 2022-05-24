@@ -233,13 +233,16 @@ export const loadExtension = function (app) {
     PEFactory.createDataEditor('data', 'extension.setting.tableData') //组件
   )
 
+  //列
   PERegister.registerCPEditor(
     app,
     'table-columns',
     'table-columns-editor',
     PEFactory.createColumnsEditor('columns', 'extension.setting.tableColumns')
   )
-
+  /**
+   * 数据源
+   */
   PERegister.registerCPEditor(
     app,
     'use-data-source',
@@ -254,6 +257,27 @@ export const loadExtension = function (app) {
     'data-source', //属性名称
     'data-source-editor', //属性组件名称
     PEFactory.createDataSourceEditor('extension.setting.dataSource') //组件
+  )
+  /**
+   * 操作项 operations
+   */
+  PERegister.registerCPEditor(
+    app,
+    'show-operation',
+    'show-operation-editor',
+    PEFactory.createBooleanEditor(
+      'show-operation',
+      'extension.setting.showOperation'
+    )
+  )
+  PERegister.registerCPEditor(
+    app,
+    'table-operations',
+    'table-operations-editor',
+    PEFactory.createTableOperationEditor(
+      'operations',
+      'extension.setting.tableOperations'
+    )
   )
 
   PERegister.registerCPEditor(
@@ -331,16 +355,6 @@ export const loadExtension = function (app) {
         }
       ]
     })
-  )
-  //operation
-  PERegister.registerCPEditor(
-    app,
-    'show-operation',
-    'show-operation-editor',
-    PEFactory.createBooleanEditor(
-      'show-operation',
-      'extension.setting.showOperation'
-    )
   )
 
   //分页

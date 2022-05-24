@@ -42,7 +42,8 @@ export default {
       showOperation: '显示操作按钮列',
       operations: '操作按钮编辑',
       useDataSource: '使用数据源',
-      usePagination: '使用分页'
+      usePagination: '使用分页',
+      tableOperations: '操作列编辑'
     }
   }
 }

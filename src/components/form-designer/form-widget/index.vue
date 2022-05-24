@@ -140,7 +140,6 @@ export default {
   },
   created() {
     this.designer.initDesigner(!!this.getDesignerConfig().resetFormJson)
-    console.log('initDesigner')
     this.designer.loadPresetCssCode(this.getDesignerConfig().presetCssCode)
   },
   mounted() {
@@ -163,9 +162,7 @@ export default {
       }
     },
 
-    onDragEnd(evt) {
-      //console.log('drag end000', evt)
-    },
+    onDragEnd(evt) {},
 
     onDragAdd(evt) {
       const newIndex = evt.newIndex

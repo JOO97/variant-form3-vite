@@ -113,7 +113,8 @@ export const tableSchema = {
           circle: false,
           disable: '',
           visible: true,
-          plain: true
+          plain: true,
+          emit: true
         },
         {
           label: '编辑',
@@ -123,7 +124,8 @@ export const tableSchema = {
           circle: false,
           visible: true,
           disable: '',
-          plain: true
+          plain: true,
+          emit: true
         },
         {
           label: '删除',
@@ -133,7 +135,8 @@ export const tableSchema = {
           circle: false,
           visible: true,
           disable: '',
-          plain: true
+          plain: true,
+          emit: false
         }
       ]
     },

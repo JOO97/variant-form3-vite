@@ -8,6 +8,7 @@ import { optionExists } from '@/utils/util'
 import dataEditor from '@/components/form-designer/setting-panel/property-editor/table/data-editor.vue'
 import columnsEditor from '@/components/form-designer/setting-panel/property-editor/table/columns-editor.vue'
 import dataSourceEditor from '@/components/form-designer/setting-panel/property-editor/table/data-source-editor.vue'
+import operationsEditor from '@/components/form-designer/setting-panel/property-editor/table/operations-editor.vue'
 
 export const createInputTextEditor = function (propName, propLabelKey) {
   return {
@@ -232,7 +233,6 @@ export const createDataEditor = function (propName, propLabelKey) {
           <dataEditor
             optionModel={this.optionModel}
             onSubmit={(data) => {
-              console.log('data', data)
               this.optionModel.data = data
             }}
           />
@@ -276,6 +276,27 @@ export const createDataSourceEditor = function (propLabelKey) {
             optionModel={this.optionModel}
             onSubmit={(options) => {
               this.optionModel['data-source'] = JSON.parse(options)
+            }}
+          />
+        </el-form-item>
+      )
+    }
+  }
+}
+
+//表格操作列编辑器
+export const createTableOperationEditor = function (propName, propLabelKey) {
+  return {
+    props: {
+      optionModel: Object
+    },
+    render() {
+      return (
+        <el-form-item label={translate(propLabelKey)}>
+          <operationsEditor
+            optionModel={this.optionModel}
+            onSubmit={(operations) => {
+              this.optionModel.operations = operations
             }}
           />
         </el-form-item>

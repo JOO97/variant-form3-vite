@@ -45,7 +45,7 @@ axios
 watch(
   () => data.formJson,
   (nVal) => {
-    const table = formRender.value.getWidgetRef('table')
+    const table = preForm.value.getWidgetRef('table')
     console.log('table', table)
     table.setColumnsByScheme(nVal)
   },

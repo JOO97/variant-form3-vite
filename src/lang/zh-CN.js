@@ -328,7 +328,9 @@ export default {
       syntaxCheckWarning: 'JS代码存在语法错误，请仔细检查！',
 
       //custom
-      color: '颜色'
+      color: '颜色',
+      listSetting: '列表设置',
+      enableSearch: '支持列表检索'
     }
   }
 }

@@ -58,6 +58,9 @@ const COMMON_PROPERTIES = {
   customClass: 'customClass-editor',
   //custom
   color: 'color-editor',
+  enableSearch: 'enableSearch-editor', //支持检索
+  displayField: 'displayField-editor', //展示字段
+  searchField: 'searchField-editor', //检索字段
 
   //容器
   showBlankRow: 'showBlankRow-editor',

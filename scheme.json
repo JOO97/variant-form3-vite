@@ -99,6 +99,9 @@
     "onFormCreated": "",
     "onFormMounted": "\nconst table = this.getWidgetRef('table57796')\naxios.get('https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/tableData').then(res => {\n  table.setValue(res.data)\n})\naxios.get('https://www.fastmock.site/mock/f5c1c95be58bcf0e87d90568f7c1e114/form/formScheme').then(res => {\n  table.setColumnsByScheme(res.data)\n})",
     "onFormDataChange": "",
-    "onFormValidate": ""
+    "onFormValidate": "",
+    "enableSearch": true
+
+    
   }
 }
